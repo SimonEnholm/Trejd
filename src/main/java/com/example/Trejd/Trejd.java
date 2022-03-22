@@ -11,20 +11,20 @@ public class Trejd {
 
     @OneToOne
     @JoinColumn(name= "offer_id")
-    private Offer offer;
+    private OfferTrejd offer;
 
     @OneToOne
     @JoinColumn(name = "order_id")
-    private Order order;
+    private OrderTrejd order;
 
     //todo tidslåsning, deposition?
     private boolean completed;
 
-    public Order getOrder() {
+    public OrderTrejd getOrder() {
         return order;
     }
 
-    public Offer getOffer() {
+    public OfferTrejd getOffer() {
         return offer;
     }
 

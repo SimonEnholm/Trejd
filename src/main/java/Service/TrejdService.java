@@ -7,10 +7,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class TrejdService {
 
-    //todo Atowire respositories
-
-    @Autowired
-    UserRepository userRepository;
+    //todo
+//    @Autowired
+//    UserRepository userRepository;
 
 
 }
