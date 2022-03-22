@@ -1,9 +1,6 @@
 package com.example.Trejd;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Skill {
@@ -11,8 +8,16 @@ public class Skill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //private Long categoryId;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     private String skillName;
+
+    public Category getCategory() {
+        return category;
+    }
 
     public Long getId() {
         return id;

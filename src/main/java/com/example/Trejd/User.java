@@ -1,6 +1,7 @@
 package com.example.Trejd;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class User {
@@ -8,7 +9,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //private Long skillID;
+
+    @OneToMany (mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserSkills> userSkills;
     private String firstName;
     private String lastName;
     private String email;
@@ -18,6 +21,13 @@ public class User {
     private double rating;
 
 
+    public List<UserSkills> getUserSkills() {
+        return userSkills;
+    }
+
+    public void setUserSkills(List<UserSkills> userSkills) {
+        this.userSkills = userSkills;
+    }
 
     public double getBalance() {
         return balance;

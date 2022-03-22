@@ -1,9 +1,6 @@
 package com.example.Trejd;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Review {
@@ -11,11 +8,33 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //private Long customerId;
-    //private Long performerId;
-    //private Long trejdId;
+
+    @OneToOne
+    @JoinColumn(name = "customer_id")
+    private User customer;
+
+    @OneToOne
+    @JoinColumn(name = "performer_id")
+    private User performer;
+
+    @OneToOne
+    @JoinColumn(name = "trejd_id")
+    private Trejd trejd;
+
     private String description;
     private int rating;
+
+    public Trejd getTrejd() {
+        return trejd;
+    }
+
+    public User getPerformer() {
+        return performer;
+    }
+
+    public User getCustomer() {
+        return customer;
+    }
 
     public Long getId() {
         return id;

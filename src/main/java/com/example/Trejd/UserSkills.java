@@ -1,9 +1,6 @@
 package com.example.Trejd;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class UserSkills {
@@ -11,7 +8,20 @@ public class UserSkills {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //private Long userId;
-    //private Long skillId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    @ManyToOne
+    @JoinColumn(name = "skill_id")
+    private Skill skill;
+
+    public Skill getSkill() {
+        return skill;
+    }
+
+    public User getUser() {
+        return user;
+    }
 
 }

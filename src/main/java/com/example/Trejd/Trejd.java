@@ -1,9 +1,6 @@
 package com.example.Trejd;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Trejd {
@@ -11,10 +8,25 @@ public class Trejd {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //private Long offerId;
-    //private Long orderId;
+
+    @OneToOne
+    @JoinColumn(name= "offer_id")
+    private Offer offer;
+
+    @OneToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
     //todo tidslåsning, deposition?
     private boolean completed;
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public Offer getOffer() {
+        return offer;
+    }
 
     public Long getId() {
         return id;

@@ -1,9 +1,6 @@
 package com.example.Trejd;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Order {
@@ -11,8 +8,14 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //private Long userId;
-    //private geo location;
+    private String location;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
 
 
     public Long getId() {
@@ -22,4 +25,6 @@ public class Order {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getLocation() { return location; }
 }
