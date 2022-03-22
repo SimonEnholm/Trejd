@@ -1,4 +1,4 @@
-package Repositories;
+package com.example.Trejd.Repositories;
 
 import com.example.Trejd.Skill;
 import org.springframework.data.repository.CrudRepository;

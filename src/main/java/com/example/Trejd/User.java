@@ -20,6 +20,15 @@ public class User {
     private double balance;
     private double rating;
 
+    public User(){}
+
+    public void setUser(String firstName, String lastName, String email, String password){
+     this.firstName = firstName;
+     this.lastName = lastName;
+     this.email = email;
+     this.password = password;
+ }
+
 
     public List<UserSkills> getUserSkills() {
         return userSkills;

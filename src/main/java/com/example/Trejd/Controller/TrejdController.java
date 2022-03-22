@@ -1,13 +1,13 @@
-package Controller;
+package com.example.Trejd.Controller;
 
-import Service.TrejdService;
+import com.example.Trejd.Service.TrejdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller
 public class TrejdController {
 
-    // todo
-//    @Autowired
-//    TrejdService service;
+  @Autowired
+  TrejdService service;
+
 }
