@@ -24,8 +24,6 @@ import java.util.List;
 
 @Service
 public class TrejdService {
-    @Autowired
-    UserSkillsRepository userSkillsRepository;
 
     @Autowired
     CategoryRepository categoryRepo;
@@ -45,8 +43,7 @@ public class TrejdService {
     UserSkillsRepository userSkillsRepo;
 
     // Skapar en ny användare
-    public void createUser(String fn, String ln, String pw, String email) {
-        User user = new User(fn, ln, pw, email);
+    public void createUser(User user) {
         userRepo.save(user);
     }
 
@@ -56,9 +53,8 @@ public class TrejdService {
     }
 
     // Skapa en annons inom Users expertis-område.
-    public void createOffer(User user, Skill skill, String location, String description) {
-        OfferTrejd offer = new OfferTrejd(user, skill, location, description);
-        offerRepo.save(offer);
+    public void createOffer(OfferTrejd offerTrejd) {
+        offerRepo.save(offerTrejd);
     }
 
     //Hittar en annons med sökord ex. "målare"
@@ -75,52 +71,46 @@ public class TrejdService {
     public User getUserById() {
         return userRepo.findById(1L).get();
     }
+
     // hämtar en skill med (hårdkodad id)
     public Skill getSkillById() {
         return skillRepo.findById(1L).get();
     }
+
     // find all categories
     public List<Category> getAllCategories() {
         return (List<Category>) categoryRepo.findAll();
-
-    public boolean saveUser(User user){
-    if (userRepository.findByEmail(user.getEmail())==null){
-           userRepository.save(user);
-           return true;
-    }else {
-        return false;
     }
 
-
-            }
-  public void createOrder(String location, User user, Skill skill){
-                OrderTrejd order = new OrderTrejd(location, user, skill);
-                orderRepository.save(order);
-            }
-
-            public void saveTrejd (Trejd trejd){
-                trejdRepository.save(trejd);
-
-            }
-            public void createReview(User customer, User performer, Trejd trejd, String description, int rating){
-            Review review = new Review(customer, performer, trejd, description, rating);
-            reviewRepository.save(review);
-            }
-            public List<Review> getAllReviewsByCustomerId (Long id){
-            return reviewRepository.findAllByCustomerId(id);
-            }
-
-    public User getUserById() {
-        return userRepository.findById(1L).get();
+    public boolean saveUser(User user) {
+        if (userRepo.findByEmail(user.getEmail()) == null) {
+            userRepo.save(user);
+            return true;
+        } else {
+            return false;
+        }
 
 
-    public void saveUser(User user){
-    userRepository.save(user);
+    }
 
+    public void createOrder(OrderTrejd orderTrejd) {
+        orderRepo.save(orderTrejd);
+    }
+
+    public void saveTrejd(Trejd trejd) {
+        trejdRepo.save(trejd);
+    }
+
+    public void createReview(Review review) {
+        reviewRepo.save(review);
+    }
+
+    public List<Review> getAllReviewsByCustomerId(Long id) {
+        return reviewRepo.findAllByCustomerId(id);
     }
 
     public boolean checkPassword(String email, String password) {
-        List<User> users = userRepository.findByEmail(email);
+        List<User> users = userRepo.findByEmail(email);
         if (users.size() <= 0) {
             return false;
         }
@@ -134,23 +124,21 @@ public class TrejdService {
     }
 
 
-public List<Skill> getAllByCategoryId(Long id){
-        return (List<Skill>) skillRepository.findAllByCategoryId(id);
-    }
-    public List<String> getAllCategoriesByUser(Long id){
-        return (List<String>) userSkillsRepository.getAllCategoryNamesByUserId(id);
+    public List<Skill> getAllByCategoryId(Long id) {
+        return (List<Skill>) skillRepo.findAllByCategoryId(id);
     }
 
-    public List <OrderTrejd> getAllOrders(){
-        return (List<OrderTrejd>) orderRepository.findAll();
+    public List<String> getAllCategoriesByUser(Long id) {
+        return (List<String>) userSkillsRepo.getAllCategoryNamesByUserId(id);
     }
 
-    public List<Skill> getAllSkillsByCategoryId(Long id){
-        return skillRepository.getAllSkillsByCategoryId(id);
+    public List<OrderTrejd> getAllOrders() {
+        return (List<OrderTrejd>) orderRepo.findAll();
     }
 
+    public List<Skill> getAllSkillsByCategoryId(Long id) {
+        return skillRepo.getAllSkillsByCategoryId(id);
     }
-
 
 
 }

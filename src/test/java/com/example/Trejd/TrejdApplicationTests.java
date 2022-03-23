@@ -23,7 +23,8 @@ class TrejdApplicationTests {
 	void findAllUsers() {
 		List<User> userList = service.findAllUsers();
 		int lengthList = userList.size();
-		service.createUser("admin", "admin", "123", "admin@trejd.se");
+		User user = new User("admin","admin","123","admin@test.se");
+		service.createUser(user);
 		userList = service.findAllUsers();
 		Assertions.assertEquals(true, lengthList + 1 == userList.size());
 	}
@@ -42,7 +43,8 @@ class TrejdApplicationTests {
 		int lengthList = offerList.size();
 		User user = service.getUserById();
 		Skill skill = service.getSkillById();
-		service.createOffer(user, skill,"Stockholm","målar väggar");
+		OfferTrejd offerTrejd = new OfferTrejd(user,skill,"Sollentuna","efwfwefwe");
+		service.createOffer(offerTrejd);
 		offerList = service.getAllOffers();
 		Assertions.assertEquals(true, lengthList + 1 == offerList.size());
 	}

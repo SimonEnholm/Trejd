@@ -17,18 +17,6 @@ public class OfferTrejd {
     private String location;
     private String description;
 
-
-
-    public OfferTrejd(){
-
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public User getUser() {return user; }
-
     public OfferTrejd() {
     }
 
@@ -46,13 +34,6 @@ public class OfferTrejd {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-
-    public String getLocation() { return location; }
-
-    public void setLocation(String location){
-        this.location = location;
     }
 
     public User getUser() {
