@@ -8,15 +8,12 @@ public class Trejd {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @OneToOne
     @JoinColumn(name= "offer_id")
     private OfferTrejd offer;
-
     @OneToOne
     @JoinColumn(name = "order_id")
     private OrderTrejd order;
-
     //todo tidslåsning, deposition?
     private boolean completed;
 

@@ -10,5 +10,6 @@ public class TrejdApplication {
 		SpringApplication.run(TrejdApplication.class, args);
 	}
 
+	
 
 }
