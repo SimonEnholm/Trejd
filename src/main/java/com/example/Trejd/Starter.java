@@ -15,9 +15,15 @@ public class Starter implements CommandLineRunner {
 
     }
     public void run(String... args) {
-        User user = new User();
-        user.setUser("Admin firstname", "Admin lastname","admin@email","xxxx");
-        service.saveUser(user);
-        System.out.println(user.getFirstName());
+//        User user = new User();
+//        user.setUser("Admin firstname", "Admin lastname", "admin@email", "xxxx");
+//        service.saveUser(user);
+//        System.out.println(user.getFirstName());
+
+        String email = "hej@hej.se";
+        String password = "lösen123";
+
+        boolean asd = service.checkPassword(email, password);
     }
+
 }
