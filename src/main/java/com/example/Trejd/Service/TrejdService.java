@@ -5,12 +5,17 @@ import com.example.Trejd.*;
 import com.example.Trejd.Repositories.*;
 
 
+import com.example.Trejd.*;
+import com.example.Trejd.Repositories.*;
+
+
 import com.example.Trejd.Category;
 import com.example.Trejd.OfferTrejd;
 import com.example.Trejd.Repositories.*;
 import com.example.Trejd.Skill;
 import com.example.Trejd.Repositories.UserRepository;
 import com.example.Trejd.User;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +24,8 @@ import java.util.List;
 
 @Service
 public class TrejdService {
+    @Autowired
+    UserSkillsRepository userSkillsRepository;
 
     @Autowired
     CategoryRepository categoryRepo;
@@ -36,7 +43,6 @@ public class TrejdService {
     UserRepository userRepo;
     @Autowired
     UserSkillsRepository userSkillsRepo;
-
 
     // Skapar en ny användare
     public void createUser(String fn, String ln, String pw, String email) {
@@ -126,5 +132,27 @@ public class TrejdService {
             return false;
         }
     }
+
+
+public List<Skill> getAllByCategoryId(Long id){
+        return (List<Skill>) skillRepository.findAllByCategoryId(id);
+    }
+    public List<String> getAllCategoriesByUser(Long id){
+        return (List<String>) userSkillsRepository.getAllCategoryNamesByUserId(id);
+    }
+
+    public List <OrderTrejd> getAllOrders(){
+        return (List<OrderTrejd>) orderRepository.findAll();
+    }
+
+    public List<Skill> getAllSkillsByCategoryId(Long id){
+        return skillRepository.getAllSkillsByCategoryId(id);
+    }
+
+    }
+
+
+
 }
+
 
