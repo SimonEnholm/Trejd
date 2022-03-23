@@ -24,6 +24,16 @@ public class Review {
     private String description;
     private int rating;
 
+    public Review(){
+    }
+    public Review (User customer, User performer, Trejd trejd, String description, int rating){
+        this.customer=customer;
+        this.performer=performer;
+        this.trejd=trejd;
+        this.description=description;
+        this.rating=rating;
+
+    }
     public Trejd getTrejd() {
         return trejd;
     }
