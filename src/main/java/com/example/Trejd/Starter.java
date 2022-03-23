@@ -17,6 +17,17 @@ public class Starter implements CommandLineRunner {
 
     }
     public void run(String... args) {
+
+//        User user = new User();
+//        user.setUser("Admin firstname", "Admin lastname", "admin@email", "xxxx");
+//        service.saveUser(user);
+//        System.out.println(user.getFirstName());
+
+        String email = "hej@hej.se";
+        String password = "lösen123";
+
+        boolean asd = service.checkPassword(email, password);
+
         User user = new User();
         user.setUser("Admin firstname", "Admin lastname","admin@email","xxxx");
         if(service.saveUser(user)==true){
@@ -30,5 +41,7 @@ public class Starter implements CommandLineRunner {
         for(int i = 0; i < testingGetting.size(); i++){
             System.out.println(testingGetting.get(i).getDescription());
         }
+
     }
+
 }

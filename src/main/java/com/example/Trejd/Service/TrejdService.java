@@ -85,6 +85,7 @@ public class TrejdService {
         return false;
     }
 
+
             }
   public void createOrder(String location, User user, Skill skill){
                 OrderTrejd order = new OrderTrejd(location, user, skill);
@@ -106,9 +107,24 @@ public class TrejdService {
     public User getUserById() {
         return userRepository.findById(1L).get();
 
+
     public void saveUser(User user){
     userRepository.save(user);
 
+    }
+
+    public boolean checkPassword(String email, String password) {
+        List<User> users = userRepository.findByEmail(email);
+        if (users.size() <= 0) {
+            return false;
+        }
+
+        User user = users.get(0);
+        if (user.getPassword().equals(password)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
