@@ -39,6 +39,8 @@ public class Starter implements CommandLineRunner {
 
         for(OrderTrejd or : l) {
             System.out.println(or.getLocation());
+
+
         }
 
 
