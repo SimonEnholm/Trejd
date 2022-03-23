@@ -7,7 +7,8 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class TrejdController {
 
-  @Autowired
-  TrejdService service;
+    // todo
+    @Autowired
+    TrejdService service;
 
 }
