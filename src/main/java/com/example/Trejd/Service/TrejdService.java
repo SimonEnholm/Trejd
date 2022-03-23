@@ -1,12 +1,17 @@
 package com.example.Trejd.Service;
 
 
+import com.example.Trejd.*;
+import com.example.Trejd.Repositories.*;
+
+
 import com.example.Trejd.Category;
 import com.example.Trejd.OfferTrejd;
 import com.example.Trejd.Repositories.*;
 import com.example.Trejd.Skill;
 import com.example.Trejd.Repositories.UserRepository;
 import com.example.Trejd.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,12 +76,39 @@ public class TrejdService {
     // find all categories
     public List<Category> getAllCategories() {
         return (List<Category>) categoryRepo.findAll();
-    UserRepository userRepository;
 
-    public TrejdService(){
-
+    public boolean saveUser(User user){
+    if (userRepository.findByEmail(user.getEmail())==null){
+           userRepository.save(user);
+           return true;
+    }else {
+        return false;
     }
+
+            }
+  public void createOrder(String location, User user, Skill skill){
+                OrderTrejd order = new OrderTrejd(location, user, skill);
+                orderRepository.save(order);
+            }
+
+            public void saveTrejd (Trejd trejd){
+                trejdRepository.save(trejd);
+
+            }
+            public void createReview(User customer, User performer, Trejd trejd, String description, int rating){
+            Review review = new Review(customer, performer, trejd, description, rating);
+            reviewRepository.save(review);
+            }
+            public List<Review> getAllReviewsByCustomerId (Long id){
+            return reviewRepository.findAllByCustomerId(id);
+            }
+
+    public User getUserById() {
+        return userRepository.findById(1L).get();
+
     public void saveUser(User user){
     userRepository.save(user);
+
     }
 }
+

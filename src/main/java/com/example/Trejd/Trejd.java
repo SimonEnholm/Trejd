@@ -10,6 +10,14 @@ public class Trejd {
     private Long id;
     @OneToOne
     @JoinColumn(name= "offer_id")
+
+    private OfferTrejd offerTrejd;
+
+    @OneToOne
+    @JoinColumn(name = "order_id")
+    private OrderTrejd orderTrejd;
+
+
     private OfferTrejd offer;
     @OneToOne
     @JoinColumn(name = "order_id")
@@ -17,12 +25,29 @@ public class Trejd {
     //todo tidslåsning, deposition?
     private boolean completed;
 
+    public Trejd(){
+    }
+
+    /*public Trejd(OfferTrejd offer, OrderTrejd order, boolean completed) {
+        this.offerTrejd = offer;
+        this.orderTrejd = order;
+        this.completed = completed;
+    }*/
+
+    public void setOfferTrejd(OfferTrejd offerTrejd) {
+        this.offerTrejd = offerTrejd;
+    }
+
+    public void setOrderTrejd(OrderTrejd orderTrejd) {
+        this.orderTrejd = orderTrejd;
+    }
+
     public OrderTrejd getOrder() {
-        return order;
+        return orderTrejd;
     }
 
     public OfferTrejd getOffer() {
-        return offer;
+        return offerTrejd;
     }
 
     public Long getId() {
@@ -40,4 +65,5 @@ public class Trejd {
     public void setCompleted(boolean completed) {
         this.completed = completed;
     }
+
 }
