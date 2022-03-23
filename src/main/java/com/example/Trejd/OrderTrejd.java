@@ -34,7 +34,6 @@ public class OrderTrejd {
         return user;
     }
 
-
     public Long getId() {
         return id;
     }

@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class TrejdController {
 
-  @Autowired
-  TrejdService service;
+    // todo
+    @Autowired
+    TrejdService service;
 
   @GetMapping("/")
   public String getLoginPage() {
