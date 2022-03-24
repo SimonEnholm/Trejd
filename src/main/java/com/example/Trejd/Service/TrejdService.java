@@ -109,18 +109,21 @@ public class TrejdService {
         return reviewRepo.findAllByCustomerId(id);
     }
 
-    public boolean checkPassword(String email, String password) {
-        List<User> users = userRepo.findByEmail(email);
-        if (users.size() <= 0) {
-            return false;
-        }
+    public User getUser(String email, String password) {
+       User user =  userRepo.getUserByEmailAndPassword(email,password);
 
-        User user = users.get(0);
-        if (user.getPassword().equals(password)) {
-            return true;
-        } else {
-            return false;
-        }
+       return user;
+//        List<User> users = userRepo.findByEmail(email);
+//        if (users.size() <= 0) {
+//            return false;
+//        }
+//
+//        User user = users.get(0);
+//        if (user.getPassword().equals(password)) {
+//            return user;
+//        } else {
+//            return false;
+//        }
     }
 
 
