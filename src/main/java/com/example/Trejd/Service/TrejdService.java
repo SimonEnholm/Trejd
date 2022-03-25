@@ -84,7 +84,9 @@ public class TrejdService {
     }
 
     public boolean saveUser(User user) {
-        if (userRepo.findByEmail(user.getEmail()) == null) {
+        System.out.println(userRepo.findByEmail(user.getEmail()));
+        if (userRepo.findByEmail(user.getEmail()).size() == 0) {
+            System.out.println("test");
             userRepo.save(user);
             return true;
         } else {
@@ -112,19 +114,7 @@ public class TrejdService {
 
     public User getUser(String email, String password) {
        User user =  userRepo.getUserByEmailAndPassword(email,password);
-
        return user;
-//        List<User> users = userRepo.findByEmail(email);
-//        if (users.size() <= 0) {
-//            return false;
-//        }
-//
-//        User user = users.get(0);
-//        if (user.getPassword().equals(password)) {
-//            return user;
-//        } else {
-//            return false;
-//        }
     }
 
 
@@ -144,6 +134,9 @@ public class TrejdService {
         return skillRepo.getAllSkillsByCategoryId(id);
     }
 
+    public List<Skill> getAllSkills() {
+        return (List<Skill>) skillRepo.findAll();
+    }
     //optional innebär att det kanske inte hittar trejden med det id:t och att vi kanske får andra alternativa grejer
     public Trejd getTrejd(Long id) {
         Optional<Trejd> trejd = trejdRepo.findById(id);

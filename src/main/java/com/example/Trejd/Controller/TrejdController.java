@@ -20,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class TrejdController {
@@ -103,6 +104,24 @@ public class TrejdController {
         return "my-page";
     }
 
+    @GetMapping("/create-user")
+    public String viewUserPage(Model model){
+      User user = new User();
+        List<Skill> skills = service.getAllSkills();
+        model.addAttribute("skills",skills);
+        model.addAttribute("user",user);
+        return "create-user";
+  }
+
+    @PostMapping("/create-user")
+    public String createUserPage(@ModelAttribute User user, Model model){
+        System.out.println(user.getEmail());
+         if(!service.saveUser(user)){
+          System.out.println("User already exist!");
+          return "create-user";
+      }
+      return "my-page";
+  }
 
     @GetMapping("/info")
     public String getInfo() {
