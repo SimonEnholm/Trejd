@@ -27,10 +27,10 @@ public class Starter implements CommandLineRunner {
 //        service.saveUser(user);
 //        System.out.println(user.getFirstName());
 
-        String email = "hej@hej.se";
-        String password = "lösen123";
+       // String email = "hej@hej.se";
+        //String password = "lösen123";
 
-        boolean asd = service.checkPassword(email, password);
+        //User asd = service.getUser(email, password);
 
         User user = new User();
         user.setUser("Admin firstname", "Admin lastname","admin@email","xxxx");

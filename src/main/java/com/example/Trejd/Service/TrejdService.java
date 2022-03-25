@@ -1,26 +1,18 @@
 package com.example.Trejd.Service;
-
-
 import com.example.Trejd.*;
 import com.example.Trejd.Repositories.*;
-
-
 import com.example.Trejd.*;
 import com.example.Trejd.Repositories.*;
-
-
 import com.example.Trejd.Category;
 import com.example.Trejd.OfferTrejd;
 import com.example.Trejd.Repositories.*;
 import com.example.Trejd.Skill;
 import com.example.Trejd.Repositories.UserRepository;
 import com.example.Trejd.User;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TrejdService {
@@ -125,11 +117,9 @@ public class TrejdService {
         return reviewRepo.findAllByCustomerId(id);
     }
 
-    public boolean checkPassword(String email, String password) {
-        List<User> users = userRepo.findByEmail(email);
-        if (users.size() <= 0) {
-            return false;
-        }
+    public User getUser(String email, String password) {
+       User user =  userRepo.getUserByEmailAndPassword(email,password);
+
 
         User user = users.get(0);
         if (user.getPassword().equals(password)) {
@@ -138,6 +128,20 @@ public class TrejdService {
             return false;
         }
 
+
+
+       return user;
+//        List<User> users = userRepo.findByEmail(email);
+//        if (users.size() <= 0) {
+//            return false;
+//        }
+//
+//        User user = users.get(0);
+//        if (user.getPassword().equals(password)) {
+//            return user;
+//        } else {
+//            return false;
+//        }
 
     }
 
@@ -156,6 +160,16 @@ public class TrejdService {
 
     public List<Skill> getAllSkillsByCategoryId(Long id) {
         return skillRepo.getAllSkillsByCategoryId(id);
+    }
+
+    //optional innebär att det kanske inte hittar trejden med det id:t och att vi kanske får andra alternativa grejer
+    public Trejd getTrejd(Long id) {
+        Optional<Trejd> trejd = trejdRepo.findById(id);
+        if (trejd.isPresent()) {
+            return trejd.get();
+        }else {
+            return null;
+        }
     }
 
 
