@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TrejdService {
@@ -136,6 +137,16 @@ public class TrejdService {
     public List<Skill> getAllSkills() {
         return (List<Skill>) skillRepo.findAll();
     }
+    //optional innebär att det kanske inte hittar trejden med det id:t och att vi kanske får andra alternativa grejer
+    public Trejd getTrejd(Long id) {
+        Optional<Trejd> trejd = trejdRepo.findById(id);
+        if (trejd.isPresent()) {
+            return trejd.get();
+        }else {
+            return null;
+        }
+    }
+
 
 }
 
