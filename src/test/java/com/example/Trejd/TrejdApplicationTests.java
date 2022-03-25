@@ -36,18 +36,24 @@ class TrejdApplicationTests {
 		Assertions.assertEquals(7,offerList.size());
 	}
 
-	// Skapar en Offer (hårdkodade users och skills)
 	@Test
-	void createOffer() {
-		List<OfferTrejd> offerList = service.getAllOffers();
-		int lengthList = offerList.size();
-		User user = service.getUserById();
-		Skill skill = service.getSkillById();
-		OfferTrejd offerTrejd = new OfferTrejd(user,skill,"Sollentuna","efwfwefwe");
-		service.createOffer(offerTrejd);
-		offerList = service.getAllOffers();
-		Assertions.assertEquals(true, lengthList + 1 == offerList.size());
+	void getOrdersByLocation() {
+		List<OrderTrejd>orderList = service.getOrdersByLocation("sthlm", "programmerare");
+		Assertions.assertEquals(2, orderList.size());
 	}
+
+	// Skapar en Offer (hårdkodade users och skills)
+//	@Test
+//	void createOffer() {
+//		List<OfferTrejd> offerList = service.getAllOffers();
+//		int lengthList = offerList.size();
+//		User user = service.getUserById();
+//		Skill skill = service.getSkillById();
+//		OfferTrejd offerTrejd = new OfferTrejd(user,skill,"Sollentuna","efwfwefwe");
+//		service.createOffer(offerTrejd);
+//		offerList = service.getAllOffers();
+//		Assertions.assertEquals(true, lengthList + 1 == offerList.size());
+//	}
 
 	// testar att hämta alla Kategorier
 	@Test
