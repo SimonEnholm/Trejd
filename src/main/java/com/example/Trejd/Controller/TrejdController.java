@@ -1,16 +1,15 @@
 package com.example.Trejd.Controller;
 
 import com.example.Trejd.Service.TrejdService;
+import com.example.Trejd.Skill;
 import com.example.Trejd.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class TrejdController {
@@ -63,4 +62,23 @@ public class TrejdController {
     public String getMyPage() {
         return "my-page";
     }
+
+    @GetMapping("/create-user")
+    public String viewUserPage(Model model){
+      User user = new User();
+        List<Skill> skills = service.getAllSkills();
+        model.addAttribute("skills",skills);
+        model.addAttribute("user",user);
+        return "create-user";
+  }
+
+    @PostMapping("/create-user")
+    public String createUserPage(@ModelAttribute User user, Model model){
+        System.out.println(user.getEmail());
+         if(!service.saveUser(user)){
+          System.out.println("User already exist!");
+          return "create-user";
+      }
+      return "my-page";
+  }
 }
