@@ -35,19 +35,26 @@ public class TrejdController {
         return "home";
     }
 
-  @GetMapping("/orders")
+  @GetMapping("/performers")
     public String getOrderPage(Model model) {
       model.addAttribute("users", service.findAllUsers());
-      return "orderlist";
+      return "viewPerformers";
   }
 
   @GetMapping("/maketrejd/{id}")
 
-    public String makeTrejdPage(Model model, @PathVariable Long id, RestTemplate restTemplate) {
-      //User user = restTemplate.getForObject("http://localhost:8085/maketrejd/" + id, User.class);
+    public String trejdProfilePage(Model model, @PathVariable Long id) {
       model.addAttribute("user", service.getUserById(id)); // skicka in från url:en
       model.addAttribute("skills", service.getUserSkills(id));
       return "maketrejd";
+  }
+
+  @PostMapping("/maketrejd/{id}")
+  public String createTrejd(HttpSession session, @PathVariable User performerId, Model model){
+      User user = (User) session.getAttribute("user");
+      model.addAttribute("order", service.createTrejd(user, performerId));
+
+      return "tack";
   }
 
 //    @PostMapping("/")
@@ -184,7 +191,7 @@ public class TrejdController {
 
     }
 //    @PostMapping("/my-page")
-//   public String uppdateMyInfo(@RequestParam String firstName,@RequestParam String lastName,@RequestParam String password,@RequestParam String email) {
+//   public String updateMyInfo(@RequestParam String firstName,@RequestParam String lastName,@RequestParam String password,@RequestParam String email) {
 //        //skills???
 //        User user = new User(firstName, lastName, password, email);
 //        service.createUser(user);
