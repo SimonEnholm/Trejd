@@ -1,14 +1,14 @@
 package com.example.Trejd.Controller;
 
+import com.example.Trejd.OfferTrejd;
+import com.example.Trejd.OrderTrejd;
 import com.example.Trejd.Service.TrejdService;
+import com.example.Trejd.Skill;
 import com.example.Trejd.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -24,9 +24,23 @@ public class TrejdController {
 
     return "home";
   }
+    @PostMapping("/")
+    public String checkLogin(@RequestParam String email, @RequestParam String password,HttpSession session) {
+        User user = service.getUser(email, password);
 
-    @PostMapping("/test/{name}")
-    public String getLoginPage(@RequestParam String email, @PathVariable String name, Model model, HttpSession session) {
+        if (user != null) {
+            System.out.println("test");
+            session.setAttribute("user", user);
+            return "my-page";
+        } else {
+            System.out.println("No such user!");
+            return "home";
+        }
+    }
+    //-- Here we also need the postmapping for create user click on the button should send us to create new user page -->
+
+   // @PostMapping("/test/{name}")
+    //public String getLoginPage(@RequestParam String email, @PathVariable String name, Model model, HttpSession session) {
 
         //Invärden från användare
         // @RequestParam /test?email="twana@test.se" <----
@@ -40,27 +54,33 @@ public class TrejdController {
         // Sessions följer med under medans användaren är inloggad
         //session.getAttribute(user) -> Vid login. setSession;
         //session.setAttribute(user);
-        return  "home";
-    }
-    @GetMapping("/login")
-    public String getLoginPage2() {
-        return "login";
-    }
-    @PostMapping("/login")
-    public String checkLogin(@RequestParam String email, @RequestParam String password,HttpSession session) {
-        User user = service.getUser(email,password);
+//        return  "home";
+//    }
 
-      if(user!=null){
-          session.setAttribute("user",user);
-          return "my-page";
-      }
-      else{
-          System.out.println("No such user!");
-          return "login";
-      }
-    }
+
+
     @GetMapping("/my-page")
     public String getMyPage() {
+      //User user = (User)session.getAttribute("user");
+      // if no user restrict view.
         return "my-page";
     }
+    @PostMapping("/my-page")
+    public String createAnOrder(@RequestParam String location, @RequestParam User user, @RequestParam Skill skill, HttpSession session) {
+        OrderTrejd order = new OrderTrejd(location, user, skill);
+        service.createOrder(order);
+        return "orderlist";
+
+//    }
+//    @PostMapping("/my-page")
+//   public String uppdateMyInfo(@RequestParam String firstName,@RequestParam String lastName,@RequestParam String password,@RequestParam String email) {
+//        //skills???
+//        User user = new User(firstName, lastName, password, email);
+//        service.createUser(user);
+//        return "my-page";
+//    }
+
+    }
+
+
 }
