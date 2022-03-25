@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Trejd Info</title>
+</head>
+<body>
+<div th:if="${trejd.completed}">
+
+
+    <form method="post" th:action="'/trejdInfo/' + ${trejd.id} + '/addReview/'">
+        <h3>Rating: </h3>
+        <select name="rating" class="mb-2">
+            <option th:value="1">1</option>
+            <option th:value="2">2</option>
+            <option th:value="3">3</option>
+            <option th:value="4">4</option>
+            <option th:value="5">5</option>
+        </select>
+        <div class="mb-3">
+            <textarea name="description" class="form-control-lg form-control" id="exampleFormControlTextarea1"
+                      rows="3"
+                      placeholder="Review"></textarea>
+        </div>
+        <input type="submit" value="Submit review" id="review-button" class="btn btn-dark">
+    </form>
+
+</div>
+
+</body>
+</html>
