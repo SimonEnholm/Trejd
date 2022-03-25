@@ -35,10 +35,6 @@ public class TrejdController {
         return "home";
     }
 
-    return "home";
-  }
-
-
   @GetMapping("/orders")
     public String getOrderPage(Model model) {
       model.addAttribute("users", service.findAllUsers());
@@ -54,19 +50,20 @@ public class TrejdController {
       return "maketrejd";
   }
 
-    @PostMapping("/")
-    public String checkLogin(@RequestParam String email, @RequestParam String password,HttpSession session) {
-        User user = service.getUser(email, password);
+//    @PostMapping("/")
+//    public String checkLogin(@RequestParam String email, @RequestParam String password,HttpSession session) {
+//        User user = service.getUser(email, password);
+//
+//        if (user != null) {
+//            System.out.println("test");
+//            session.setAttribute("user", user);
+//            return "my-page";
+//        } else {
+//            System.out.println("No such user!");
+//            return "home";
+//        }
+//    }
 
-        if (user != null) {
-            System.out.println("test");
-            session.setAttribute("user", user);
-            return "my-page";
-        } else {
-            System.out.println("No such user!");
-            return "home";
-        }
-    }
     //-- Here we also need the postmapping for create user click on the button should send us to create new user page -->
 
 
@@ -86,8 +83,8 @@ public class TrejdController {
         //session.getAttribute(user) -> Vid login. setSession;
         //session.setAttribute(user);
 
-        return "home";
-    }
+//        return "home";
+//    }
 
     @GetMapping("/login")
     public String getLoginPage2() {
@@ -185,7 +182,7 @@ public class TrejdController {
         service.createOrder(order);
         return "orderlist";
 
-//    }
+    }
 //    @PostMapping("/my-page")
 //   public String uppdateMyInfo(@RequestParam String firstName,@RequestParam String lastName,@RequestParam String password,@RequestParam String email) {
 //        //skills???

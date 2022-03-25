@@ -118,19 +118,21 @@ public class TrejdService {
     }
 
     public User getUser(String email, String password) {
-       User user =  userRepo.getUserByEmailAndPassword(email,password);
+        System.out.println("restar testar");
+       return userRepo.getUserByEmailAndPassword(email,password);
 
-
-        User user = users.get(0);
-        if (user.getPassword().equals(password)) {
-            return true;
-        } else {
-            return false;
-        }
-
-
-
-       return user;
+//        System.out.println("testar testar");
+//       // User user = users.get(0);
+//
+//        if (user.getPassword().equals(password)) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+//
+//
+//
+//       return user;
 //        List<User> users = userRepo.findByEmail(email);
 //        if (users.size() <= 0) {
 //            return false;
