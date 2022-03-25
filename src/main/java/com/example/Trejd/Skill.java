@@ -13,6 +13,9 @@ public class Skill {
     private Category category;
     private String skillName;
 
+    public Skill() {
+    }
+
 
 
     public Category getCategory() {

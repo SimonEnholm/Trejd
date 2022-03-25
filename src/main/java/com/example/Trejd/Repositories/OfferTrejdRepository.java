@@ -1,7 +1,6 @@
 package com.example.Trejd.Repositories;
 
 import com.example.Trejd.OfferTrejd;
-import com.example.Trejd.Skill;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
