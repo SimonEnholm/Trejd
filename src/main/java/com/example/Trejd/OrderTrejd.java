@@ -15,6 +15,12 @@ public class OrderTrejd {
     @OneToOne
     @JoinColumn(name="skill")
     private Skill skill;
+    @Transient
+    private Long skillId;
+    @Lob
+    private String description;
+    private double longitude;
+    private double latitude;
 
     public OrderTrejd() {
     }
@@ -23,6 +29,38 @@ public class OrderTrejd {
         this.location = location;
         this.user = user;
         this.skill = skill;
+    }
+
+    public Long getSkillId() {
+        return skillId;
+    }
+
+    public void setSkillId(Long skillId) {
+        this.skillId = skillId;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Skill getSkill() {

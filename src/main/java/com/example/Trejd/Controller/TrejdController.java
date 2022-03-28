@@ -1,15 +1,10 @@
 package com.example.Trejd.Controller;
 
 
-import com.example.Trejd.Review;
+import com.example.Trejd.*;
 import com.example.Trejd.Service.TrejdService;
-import com.example.Trejd.Trejd;
 
-import com.example.Trejd.OfferTrejd;
-import com.example.Trejd.OrderTrejd;
 import com.example.Trejd.Service.TrejdService;
-import com.example.Trejd.Skill;
-import com.example.Trejd.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -194,13 +189,13 @@ public class TrejdController {
         return "redirect:/";
     }
 
-    @PostMapping("/my-page")
-    public String createAnOrder(@RequestParam String location, @RequestParam User user, @RequestParam Skill skill, HttpSession session) {
-        OrderTrejd order = new OrderTrejd(location, user, skill);
-        service.createOrder(order);
-        return "orderlist";
-
-    }
+//    @PostMapping("/my-page")
+//    public String createAnOrder(@RequestParam String location, @RequestParam User user, @RequestParam Skill skill, HttpSession session) {
+//        OrderTrejd order = new OrderTrejd(location, user, skill);
+//        service.createOrder(order);
+//        return "orderlist";
+//
+//    }
 //    @PostMapping("/my-page")
 //   public String updateMyInfo(@RequestParam String firstName,@RequestParam String lastName,@RequestParam String password,@RequestParam String email) {
 //        //skills???
@@ -237,14 +232,28 @@ public class TrejdController {
             System.out.println("User already exist!");
             return "create-user";
         }
+        Skill skill = service.getSkillById(user.getSkillId());
+        UserSkills us = new UserSkills();
+        us.setSkill(skill);
+        us.setUser(user);
+        service.saveUserSkill(us);
         session.setAttribute("user",user);
         return "my-page";
     }
 
     // todo få med skillen vi valde. bara den ska synas
-    @GetMapping({"/create-order", "/create-order/{id}"})
+    @GetMapping({"/create-order", "/create-order/{performerId}"})
     public String createOrder(@PathVariable(required = false) Long performerId, HttpSession session, Model model){
-       // User user = (User) session.getAttribute("user");
+        OrderTrejd order = new OrderTrejd();
+        //User user = (User) session.getAttribute("user");
+
+//        if(order.getSkillId()==0){
+//            return "create-order";
+//        }
+        List<Skill> skills = service.getAllSkills();
+        model.addAttribute("skills", skills);
+        model.addAttribute("order", order);
+
         if(performerId == null){
             System.out.println("perfomer ID null");
             return "create-order";
@@ -252,6 +261,18 @@ public class TrejdController {
         model.addAttribute("performer", service.getUserById(performerId)); // skicka in från url:en
         return "create-order";
     }
+
+    // todo länkas vart?
+    @PostMapping("/create-order")
+    public String saveOrder(@ModelAttribute OrderTrejd order, HttpSession session) {
+        order.setUser( (User) session.getAttribute("user"));
+        Skill skill = service.getSkillById(order.getSkillId());
+        order.setSkill(skill);
+        service.saveOrder(order);
+        return "viewOfferList";
+    }
+
+
 
 
 

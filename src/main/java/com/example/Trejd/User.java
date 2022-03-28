@@ -12,6 +12,8 @@ public class User {
 
     @OneToMany (mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserSkills> userSkills;
+    @Transient
+    private Long skillId;
     private String firstName;
     private String lastName;
     private String email;
@@ -44,6 +46,14 @@ public class User {
 
     public double getLatitude() {
         return latitude;
+    }
+
+    public Long getSkillId() {
+        return skillId;
+    }
+
+    public void setSkillId(Long skillId) {
+        this.skillId = skillId;
     }
 
     public void setLatitude(double latitude) {

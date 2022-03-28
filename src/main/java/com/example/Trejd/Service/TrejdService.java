@@ -65,8 +65,8 @@ public class TrejdService {
     }
 
     // hämtar en skill med (hårdkodad id)
-    public Skill getSkillById() {
-        return skillRepo.findById(1L).get();
+    public Skill getSkillById(Long skillId) {
+        return skillRepo.findById(skillId).orElse(null);
     }
 
     // find all categories
@@ -229,6 +229,14 @@ public class TrejdService {
             users = (List<User>) userRepo.findAllByQuery(user.getId());
         }
         return users;
+    }
+
+    public void saveOrder(OrderTrejd order) {
+        orderRepo.save(order);
+    }
+
+    public void saveUserSkill(UserSkills us) {
+        userSkillsRepo.save(us);
     }
 }
 

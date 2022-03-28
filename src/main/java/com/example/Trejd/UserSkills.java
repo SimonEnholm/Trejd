@@ -16,6 +16,22 @@ public class UserSkills {
     @JoinColumn(name = "skill_id")
     private Skill skill;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setSkill(Skill skill) {
+        this.skill = skill;
+    }
+
     public Skill getSkill() {
         return skill;
     }
