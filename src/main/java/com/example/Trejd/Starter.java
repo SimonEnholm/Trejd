@@ -35,7 +35,7 @@ public class Starter implements CommandLineRunner {
         User user = new User();
         user.setUser("Admin firstname", "Admin lastname","admin@email","xxxx");
 
-        service.saveUser(user);
+        //service.saveUser(user);
         System.out.println(user.getFirstName());
 
         List<Skill> s = service.getAllByCategoryId(1l);
@@ -66,12 +66,12 @@ public class Starter implements CommandLineRunner {
 
 
 
-        if(service.saveUser(user)==true){
-            System.out.println("User created");
-        }
-        else {
-            System.out.println("User Email already exists");
-        }
+//        if(service.saveUser(user)==true){
+//            System.out.println("User created");
+//        }
+//        else {
+//            System.out.println("User Email already exists");
+//        }
         List<Review> testingGetting = service.getAllReviewsByCustomerId(1L);
 
         for(int i = 0; i < testingGetting.size(); i++){

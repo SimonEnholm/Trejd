@@ -177,7 +177,7 @@ public class TrejdController {
         if (trejd.getOffer().getUser().getId() == user.getId()
                 || trejd.getOrder().getUser().getId() == user.getId()) {
             boolean writtenByPerformer = trejd.getOffer().getUser().getId() == user.getId();
-            Review review = new Review(trejd.getOffer().getUser(), trejd.getOrder().getUser(), trejd, description, rating, writtenByPerformer);
+            Review review = new Review(trejd.getOrder().getUser(), trejd.getOffer().getUser(), trejd, description, rating, writtenByPerformer);
             service.createReview(review);
 
             User reviewee = writtenByPerformer
