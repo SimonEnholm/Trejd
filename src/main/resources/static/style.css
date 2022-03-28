@@ -9,16 +9,25 @@
 
 }.btn-primary{
     background-color: #1A9DA3 !important;
+     padding: 10px 20px;
+            font-size: 20px;
+            border-radius: 10px;
+            width:150px;
+
 }
 .btn-secondary {
     background-color: #F40F5F !important;
+        width:150px;
+
 }
+
 .text-custom{
 color:#F40F5F;
 font-family: 'Caveat', cursive;
 }
 .btn-custom{
 color:#F40F5F;
+
 }
 h1{
 font-family: 'Caveat', cursive;}
@@ -34,10 +43,19 @@ color: black;
   background-color: #1A9DA3 !important;
   color: white;
 
+
 }
 
 #button2{
   background-color: #F40F5F;
   color: white;
+
+}
+
+.center {
+display:block;
+margin-left: auto;
+margin-right: auto;
+width 50px;
 
 }
