@@ -28,11 +28,14 @@
 
     <label for="FormInput4" class="form-label">Password</label>
     <input type="password" th:field="*{password}" class="form-control" id="FormInput4" placeholder="password">
-    <label for="FormInput4" class="form-label">Location</label>
-    <input type="text" th:field="*{location}" id="location">
-    <button onclick="setLocation()">Get Location</button>
-    <input type="hidden" th:field="*{latitude}" id="latitude">
-    <input type="hidden" th:field="*{longitude}" id="longitude">
+
+    <label for="FormInput5" class="form-label">Location</label>
+    <input type="text" th:field="*{location}" class="form-control" id="FormInput5" placeholder="Get or type your location"><br>
+
+    <input type = "hidden" th:field="*{latitude}" id="latitude">
+    <input type = "hidden" th:field="*{longitude}" id="longitude">
+    <p id="demo"></p>
+
     <label for="exampleDataList" class="form-label">Add skill</label>
     <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">
     <datalist id="datalistOptions">
@@ -49,6 +52,7 @@
         <button type="submit" class="btn btn-primary mb-3">Confirm</button>
     </div>
 </form>
+<button onclick="getLocation()">Get your location</button><button onclick="setLocation()">Set your location</button>
 <script src="geoScript.js"></script>
 
 </body>

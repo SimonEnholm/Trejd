@@ -19,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 @Controller
@@ -35,12 +36,21 @@ public class TrejdController {
         return "home";
     }
 
-  @GetMapping("/performers")
-    public String getOrderPage(Model model) {
-      model.addAttribute("users", service.findAllUsers());
-      return "viewPerformers";
-  }
+    @GetMapping("/offerlist")
+    public String getOfferPage(Model model) {
+        model.addAttribute("users", service.getOffersJoinUserJoinSkill());
+        return "viewOfferList";
+    }
 
+//  @GetMapping("/performers")
+//    public String getOrderPage(Model model, HttpSession session) {
+//      User user = (User) session.getAttribute("user");
+//      model.addAttribute("users", service.findAllUsers(user.getId()));
+//
+//      return "viewPerformers";
+//  }
+
+    // todo fetmarkering på skillen vi valde.
   @GetMapping("/maketrejd/{id}")
 
     public String trejdProfilePage(Model model, @PathVariable Long id) {
@@ -49,27 +59,28 @@ public class TrejdController {
       return "maketrejd";
   }
 
-  @PostMapping("/maketrejd/{id}")
-  public String createTrejd(HttpSession session, @PathVariable User performerId, Model model){
-      User user = (User) session.getAttribute("user");
-      model.addAttribute("order", service.createTrejd(user, performerId));
-
-      return "tack";
-  }
-
-//    @PostMapping("/")
-//    public String checkLogin(@RequestParam String email, @RequestParam String password,HttpSession session) {
-//        User user = service.getUser(email, password);
+//  @PostMapping("/maketrejd/{id}")
+//  public String createTrejd(HttpSession session, @PathVariable User performerId, Model model){
+//      User user = (User) session.getAttribute("user");
+//      model.addAttribute("order", service.createTrejd(user, performerId));
 //
-//        if (user != null) {
-//            System.out.println("test");
-//            session.setAttribute("user", user);
-//            return "my-page";
-//        } else {
-//            System.out.println("No such user!");
-//            return "home";
-//        }
-//    }
+//      return "tack";
+//  }
+
+    @PostMapping("/")
+    public String checkLogin(@RequestParam String email, @RequestParam String password,HttpSession session) {
+        System.out.println("TeSTARRR");
+        User user = service.getUser(email, password);
+
+        if (user != null) {
+            System.out.println("test");
+            session.setAttribute("user", user);
+            return "my-page";
+        } else {
+            System.out.println("No such user!");
+            return "home";
+        }
+    }
 
     //-- Here we also need the postmapping for create user click on the button should send us to create new user page -->
 
@@ -98,18 +109,18 @@ public class TrejdController {
         return "login";
     }
 
-    @PostMapping("/login")
-    public String checkLogin(@RequestParam String email, @RequestParam String password, HttpSession session) {
-        User user = service.getUser(email, password);
-
-        if (user != null) {
-            session.setAttribute("user", user);
-            return "my-page";
-        } else {
-            System.out.println("No such user!");
-            return "login";
-        }
-    }
+//    @PostMapping("/login")
+//    public String checkLogin(@RequestParam String email, @RequestParam String password, HttpSession session) {
+//        User user = service.getUser(email, password);
+//
+//        if (user != null) {
+//            session.setAttribute("user", user);
+//            return "my-page";
+//        } else {
+//            System.out.println("No such user!");
+//            return "login";
+//        }
+//    }
 
 //        return  "home";
 //    }
@@ -118,8 +129,8 @@ public class TrejdController {
 
 
     @GetMapping("/my-page")
-    public String getMyPage() {
-      //User user = (User)session.getAttribute("user");
+    public String getMyPage(HttpSession session) {
+      User user = (User)session.getAttribute("user");
       // if no user restrict view.
         return "my-page";
     }
@@ -198,6 +209,52 @@ public class TrejdController {
 //        return "my-page";
 //    }
 
-  
+    //todo sökfunktion
+    @GetMapping("/orders")
+    public String getOrderPage(Model model,@RequestParam(defaultValue = "distance") String sortedBy,HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if(sortedBy.equals("distance"))
+            model.addAttribute("users", service.findAllUsersSorted(user,true));
+        else{
+            model.addAttribute("users", service.findAllUsersSorted(user,false));
+        }
+        return "viewPerformers";
+    }
+
+    @GetMapping("/create-user")
+    public String viewUserPage(Model model){
+        User user = new User();
+        List<Skill> skills = service.getAllSkills();
+        model.addAttribute("skills",skills);
+        model.addAttribute("user",user);
+        return "create-user";
+    }
+
+    @PostMapping("/create-user")
+    public String createUserPage(@ModelAttribute User user, Model model,HttpSession session){
+
+        if(!service.saveUser(user)){
+            System.out.println("User already exist!");
+            return "create-user";
+        }
+        session.setAttribute("user",user);
+        return "my-page";
+    }
+
+    // todo få med skillen vi valde. bara den ska synas
+    @GetMapping({"/create-order", "/create-order/{id}"})
+    public String createOrder(@PathVariable(required = false) Long performerId, HttpSession session, Model model){
+       // User user = (User) session.getAttribute("user");
+        if(performerId == null){
+            System.out.println("perfomer ID null");
+            return "create-order";
+        }
+        model.addAttribute("performer", service.getUserById(performerId)); // skicka in från url:en
+        return "create-order";
+    }
+
+
+
+
 
 }

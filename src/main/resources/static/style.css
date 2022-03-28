@@ -1,10 +1,43 @@
 
+
 .navbar-custom {
   padding: 60px;
   text-align: center;
-  background-color: #1a9da3 ;
-  color: white;
+  background-color: #1A9DA3;
+  color: #F40F5F;
   font-size: 30px;
+
+}.btn-primary{
+    background-color: #1A9DA3 !important;
+}
+.btn-secondary {
+    background-color: #F40F5F !important;
+}
+.text-custom{
+color:#F40F5F;
+font-family: 'Caveat', cursive;
+}
+.btn-custom{
+color:#F40F5F;
 }
 h1{
-color:red;}
+font-family: 'Caveat', cursive;}
+.bg-custom{
+background-color:#E6E6E6;
+}
+
+.icon-black{
+color: black;
+}
+
+.button{
+  background-color: #1A9DA3 !important;
+  color: white;
+
+}
+
+#button2{
+  background-color: #F40F5F;
+  color: white;
+
+}

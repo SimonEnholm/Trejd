@@ -40,8 +40,8 @@ public class TrejdService {
     }
 
     // Hittar alla skapade användare
-    public List<User> findAllUsers() {
-        return (List<User>) userRepo.findAll();
+    public List<User> findAllUsers(Long id) {
+        return userRepo.findAllByQuery(id);
     }
 
     // Skapa en annons inom Users expertis-område.
@@ -91,7 +91,7 @@ public class TrejdService {
 
 
     public boolean saveUser(User user) {
-        if (userRepo.findByEmail(user.getEmail()) == null) {
+        if (userRepo.findByEmail(user.getEmail()).size() == 0) {
             userRepo.save(user);
             return true;
         } else {
@@ -177,6 +177,58 @@ public class TrejdService {
 
     public List<Skill> getUserSkills(Long id) {
         return skillRepo.getSkillsByUserId(id);
+    }
+
+    public List<Skill> getAllSkills() {
+        return (List<Skill>) skillRepo.findAll();
+    }
+
+    public List<OfferTrejd> getOffersJoinUserJoinSkill() {
+        // overkill? kommer man åt user-firstname via findAll?
+        return offerRepo.getOffersJoinUserJoinSkill();
+    }
+
+    private double calculate(User currentUser, User compareUser){
+
+        double pow1 = Math.pow((compareUser.getLatitude() - currentUser.getLatitude()),2);
+        double pow2 = Math.pow((compareUser.getLongitude() - currentUser.getLongitude()),2);
+        double distance = Math.sqrt(pow1 + pow2);
+        return distance;
+
+    }
+    public List<User> bubbleSortUser(User user, List<User> listToSort) {
+
+
+        for (int j = 0; j < listToSort.size(); j++) {
+
+            // Gå igenom array förutom sista då den redan är högsta (-j)
+            for (int i = 1; i < listToSort.size()-j; i++) {
+
+                if(calculate(user,listToSort.get(i)) < calculate(user,listToSort.get(i-1)))
+                    swap(listToSort,i,i-1);
+            }
+        }
+        return listToSort;
+    }
+
+    private static void swap(List<User> users, int from, int to) {
+
+        User temp = users.get(from);
+        users.set(from,users.get(to));
+        users.set(to,temp);
+
+    }
+
+    public List<User> findAllUsersSorted(User user, Boolean sortByDistance) {
+        List<User> users;
+        if(sortByDistance){
+            users = bubbleSortUser(user,(List<User>) userRepo.findAllByQuery(user.getId()));
+        }
+        else{
+            //sortByRating
+            users = (List<User>) userRepo.findAllByQuery(user.getId());
+        }
+        return users;
     }
 }
 

@@ -23,9 +23,9 @@
             </p>
         </div>
 
-            <a class="trejdbutton" href="#">TREJD</a>
-        <form action="/maketrejd/{id}" method="post">
-            <button type="submit" class="trejdbutton">trejd</button>
+            <a class="trejdbutton" th:href="'/create-order/' + ${user.id}">TREJD</a>
+     <!--   <form action="/maketrejd/{id}" method="post">
+            <button type="submit" class="trejdbutton">trejd</button>   -->
         </form>
     </div>
 

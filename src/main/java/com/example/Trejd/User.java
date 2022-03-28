@@ -19,6 +19,9 @@ public class User {
     //private boolean variation
     private double balance;
     private double rating;
+    private double latitude;
+    private double longitude;
+    private String location;
 
 
     public User() {
@@ -39,6 +42,29 @@ public class User {
      this.password = password;
  }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
     public List<UserSkills> getUserSkills() {
         return userSkills;
