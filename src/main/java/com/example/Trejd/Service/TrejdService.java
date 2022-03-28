@@ -91,7 +91,11 @@ public class TrejdService {
 
 
     public boolean saveUser(User user) {
+
+        if (userRepo.findByEmail(user.getEmail()) != null) {
+
         if (userRepo.findByEmail(user.getEmail()).size() == 0) {
+
             userRepo.save(user);
             return true;
         } else {
@@ -172,6 +176,10 @@ public class TrejdService {
         }else {
             return null;
         }
+    }
+
+    public List<Review> getReviewsOnUser(User user) {
+        return reviewRepo.findReviewsOnUser(user.getId());
     }
 
 
