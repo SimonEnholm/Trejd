@@ -5,6 +5,17 @@
     <title>Trejd Info</title>
 </head>
 <body>
+
+<div th:if="${writtenByPerformer}" >
+    Jag är performer
+</div>
+
+<div th:unless="${writtenByPerformer}" >
+    Jag är beställare
+</div>
+
+
+
 <div th:if="${trejd.completed}">
 
 
