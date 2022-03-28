@@ -55,8 +55,8 @@ public class TrejdController {
       model.addAttribute("user", user);
       model.addAttribute("reviews", reviews);
 
-    public String trejdProfilePage(Model model, @PathVariable Long id) {
-      model.addAttribute("user", service.getUserById(id)); // skicka in från url:en
+//    public String trejdProfilePage(Model model, @PathVariable Long id) {
+//      model.addAttribute("user", service.getUserById(id)); // skicka in från url:en
 
       model.addAttribute("skills", service.getUserSkills(id));
       return "maketrejd";

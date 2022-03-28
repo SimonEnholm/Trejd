@@ -94,7 +94,8 @@ public class TrejdService {
 
         if (userRepo.findByEmail(user.getEmail()) != null) {
 
-        if (userRepo.findByEmail(user.getEmail()).size() == 0) {
+    // todo behövs denna??
+   //     if (userRepo.findByEmail(user.getEmail()).size() == 0) {
 
             userRepo.save(user);
             return true;
@@ -247,5 +248,6 @@ public class TrejdService {
         userSkillsRepo.save(us);
     }
 }
+
 
 
