@@ -19,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 @Controller
@@ -43,12 +44,16 @@ public class TrejdController {
 
   @GetMapping("/maketrejd/{id}")
 
-    public String makeTrejdPage(Model model, @PathVariable Long id, RestTemplate restTemplate) {
-      //User user = restTemplate.getForObject("http://localhost:8085/maketrejd/" + id, User.class);
-      model.addAttribute("user", service.getUserById(id)); // skicka in från url:en
+    public String makeTrejdPage(Model model, @PathVariable Long id) {
+      User user = service.getUserById(id);
+      List<Review> reviews = service.getReviewsOnUser(user);
+      model.addAttribute("user", user);
+      model.addAttribute("reviews", reviews);
       model.addAttribute("skills", service.getUserSkills(id));
       return "maketrejd";
   }
+
+    //spara undan medelvärdet i databasen så vi kan söka på högst betyg --> nice to have
 
 //    @PostMapping("/")
 //    public String checkLogin(@RequestParam String email, @RequestParam String password,HttpSession session) {
@@ -110,6 +115,8 @@ public class TrejdController {
 
 
 
+
+
     @GetMapping("/my-page")
     public String getMyPage() {
       //User user = (User)session.getAttribute("user");
@@ -145,13 +152,14 @@ public class TrejdController {
 
         if (trejd.getOffer().getUser().getId() == user.getId()
                 || trejd.getOrder().getUser().getId() == user.getId()) { //vi kollar om den inloggade användaren är involverad i trejden
-
+            boolean writtenByPerformer = trejd.getOffer().getUser().getId() == user.getId();
             //vi går in i trejden. Vi kollar dens offer, sen kollar vi på offers user, sen kollar vi på users id, sen
             //kollar vi om det är den som är inloggad
             //vi går in i trejden. Vi kollar dens order, sen kollar vi på orderns user, sen kollar vi på users id, sen
             //kollar vi om det är den som är inloggad. vi kollar om den som är inloggad är den som köpt eller den som erbjudit tjänsten
 
             model.addAttribute("trejd", trejd); //vi lägger in trejden i modellen så att viewn kommer åt den
+            model.addAttribute("writtenByPerformer", writtenByPerformer);
             return "trejdInfo"; //vi kommer in på trejdInfo-sidan
         } else {
             return "redirect:/";//har personen inte tillgång till denna sida redirectas den till startsidan
@@ -168,8 +176,20 @@ public class TrejdController {
 
         if (trejd.getOffer().getUser().getId() == user.getId()
                 || trejd.getOrder().getUser().getId() == user.getId()) {
-            Review review = new Review(trejd.getOffer().getUser(), trejd.getOrder().getUser(), trejd, description, rating);
+            boolean writtenByPerformer = trejd.getOffer().getUser().getId() == user.getId();
+            Review review = new Review(trejd.getOffer().getUser(), trejd.getOrder().getUser(), trejd, description, rating, writtenByPerformer);
             service.createReview(review);
+
+            User reviewee = writtenByPerformer
+                    ? trejd.getOrder().getUser()
+                    : trejd.getOffer().getUser();
+
+            List<Review> reviews = service.getReviewsOnUser(reviewee);
+            Double averageRating = reviews.stream().mapToDouble(r -> r.getRating()).average().orElse(0.0);
+            if (averageRating != 0) {
+                reviewee.setRating(averageRating);
+                service.saveUser(reviewee);
+            }
             return "tack";
         }
 

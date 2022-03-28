@@ -8,6 +8,10 @@
 
     <h1>maketrejd page</h1>
 
+    <h1 th:text="${user.firstName}"></h1>
+
+    <h3 th:text="'Medelpoäng ' + ${averageRating}"></h3>
+
     <div class="border">
         <img class="center" src="https://toppng.com/uploads/preview/instagram-default-profile-picture-11562973083brycehrmyv.png" Height="400" width="auto">
         <div>
@@ -28,6 +32,12 @@
 
     </div>
 
+    <h4> Recensioner </h4>
+
+    <div th:each="review:${reviews}">
+        <p th:text="${review.description}" ></p>
+        <p th:text="${review.rating} + ' poäng'"></p>
+    </div>
 
 
 
