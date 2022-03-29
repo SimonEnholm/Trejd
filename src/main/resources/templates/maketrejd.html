@@ -37,22 +37,22 @@
 
     <h4> Recensioner </h4>
 
-    <article class="movie">
+<!--    <article class="movie">-->
 
-    <div class="rating">
-        <img src="/static/star-gray.png" onclick="clickStar(1)" onmouseenter="hoverStar(1)" onmouseout="leftStar()">
-        <img src="/static/star-gray.png" onclick="clickStar(2)" onmouseenter="hoverStar(2)" onmouseout="leftStar()">
-        <img src="/star-gray.png" onclick="clickStar(3)" onmouseenter="hoverStar(3)" onmouseout="leftStar()">
-        <img src="/star-gray.png" onclick="clickStar(4)" onmouseenter="hoverStar(4)" onmouseout="leftStar()">
-        <img src="/star-gray.png" onclick="clickStar(5)" onmouseenter="hoverStar(5)" onmouseout="leftStar()">
+<!--    <div class="rating">-->
+<!--        <img src="/static/star-gray.png" onclick="clickStar(1)" onmouseenter="hoverStar(1)" onmouseout="leftStar()">-->
+<!--        <img src="/static/star-gray.png" onclick="clickStar(2)" onmouseenter="hoverStar(2)" onmouseout="leftStar()">-->
+<!--        <img src="/star-gray.png" onclick="clickStar(3)" onmouseenter="hoverStar(3)" onmouseout="leftStar()">-->
+<!--        <img src="/star-gray.png" onclick="clickStar(4)" onmouseenter="hoverStar(4)" onmouseout="leftStar()">-->
+<!--        <img src="/star-gray.png" onclick="clickStar(5)" onmouseenter="hoverStar(5)" onmouseout="leftStar()">-->
 
-    </div>
+<!--    </div>-->
 
-    <section class="result">
-        &nbsp;
-    </section>
+<!--    <section class="result">-->
+<!--        &nbsp;-->
+<!--    </section>-->
 
-    </article>
+<!--    </article>-->
 
     <div th:each="review:${reviews}">
         <p th:text="${review.description}" ></p>
@@ -96,6 +96,6 @@
 
 
 </style>
-<script src="/star.js"></script>
+<!--<script src="/star.js"></script>-->
 </body>
 </html>
