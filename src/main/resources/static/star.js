@@ -27,11 +27,11 @@ function lightAllStarsUpTo(number) {
 
     // Tänder stjärnor 1=>3
     for (let i = 1; i <= number; i++) {
-        allStars[i - 1].src = "/star.png"
+        allStars[i - 1].src = "/static/star.png"
     }
 
     // Släcker lampor 4=>5
     for (let i = number + 1; i <= 5; i++) {
-        allStars[i - 1].src = "/star-gray.png"
+        allStars[i - 1].src = "/static/star-gray.png"
     }
 }
