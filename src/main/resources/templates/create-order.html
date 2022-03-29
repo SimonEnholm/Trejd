@@ -20,7 +20,6 @@
 
 </head>
 <body>
-<h1> Create Order</h1>
 <nav class="navbar navbar-expand-lg navbar-dark py-3 navbar-custom">
   <div class="container">
     <img src="/logo.png" alt="logo" width="200px" height="auto">
@@ -45,40 +44,47 @@
 
 <h1 class ="text-center"> Create Order</h1>
 </div>
-<div>
-  <img src="order_icon.JPG"
-       style="height:150px" class="center">
+<div th:if="${performer}!=null">
+  <img src="/order_icon_set.JPG" style="height:150px" class="center">
+</div>
+<div th:if="${performer}==null">
+  <img src="/order_icon.JPG" style="height:150px" class="center">
 </div>
 <p th:text="${session.firstname}">inloggad firstname</p>
 
   <form action="/create-order" method="POST" th:object="${order}">
+<!-**************************** IF PARAMETRAR ******************************************** ->
+    <div th:if="${performer}!=null" class="text-custom text-center performer-info " style="color:white !important">
+      <h1>Performer info</h1>
+        <h4>Skill: <span th:text="${order.getSkill().getSkillName}"></span></h4>
+        <p>Name: <span th:text="${performer.getFirstName} + ' ' + ${performer.getLastName}"></span></p>
 
-    <div th:if="${performer}!=null">
-      <h3>Performer info</h3>
-        <p>Skill: <span th:text="${order.getSkill().getSkillName}"></span></p>
-      <p>First name: <span th:text="${performer.getFirstName}"></span></p>
-      <p>Last name: <span th:text="${performer.getLastName}"></span></p>
+      <p> Last name: <span th:text="${performer.getLastName}" ></span></p>
       <p>Location :<span th:text="${performer.getLocation}"></span></p>
       <p>Balance: <span th:text="${performer.getBalance}"></span></p>
       <p>Rating: <span th:text="${performer.getRating}"></span></p>
       <input type="hidden" th:name="performerId" th:value="${performer.getId}">
     </div>
-
-    <div th:if="${performer}==null">
+    <!-*******************************IF NO PARAMTERAR ********************************************** ->
+    <div th:if="${performer}==null" class="text-custom text-center">
     <select th:field="*{skillId}" class="form-select text-custom text-center ">
       <option value="0" selected="selected">Choose skill</option>
       <option th:each="skill: ${skills}"  th:value="${skill.id}" th:text="${skill.skillName}"></select>
 
-    <textarea name="description" th:field="*{description}" placeholder="Describe your need..."></textarea>
+    <textarea name="description" class="form-control text-center" id="exampleFormControlTextarea1" rows="3" th:field="*{description}" placeholder="Describe your need..."></textarea>
     </div>
-
+    <!-************************************  KÖRS ALLTID  ****************************************** ->
+    <div class="text-custom text-center">
     <label for="FormInput5" class="form-label">Type in or get the location of your need: </label>
-    <input type="text" th:field="*{location}" class="form-control" id="FormInput5" placeholder="Type in or get your location"><br>
-
+    <input type="text" th:field="*{location}" class="form-control text-custom text-center" id="FormInput5" placeholder="Type in or get your location"><br>
+    </div>
     <input type = "hidden" th:field="*{latitude}" id="latitude">
     <input type = "hidden" th:field="*{longitude}" id="longitude">
-    <input type="button" onclick="getLocation()" value="Get your location" class="btn btn-secondary mb-3 text-center "></input>
-    <input type="button" onclick="setLocation()" value="Set your location" class="btn btn-secondary mb-3 text-center "></input>
+    <div class="text-custom text-center">
+    <input type="button" onclick="getLocation()" value="Get your location" class="btn btn-secondary mb-3 text-center"></input>
+    <input type="button" onclick="setLocation()" value="Set your location" class="btn btn-secondary mb-3 text-center"></input>
+    </div>
+    <!-******************************************************************************** ->
     <div class="col-auto">
 
     <div class="col-auto text-center text-custom">
