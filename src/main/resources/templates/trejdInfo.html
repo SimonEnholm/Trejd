@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
+    <link rel="stylesheet" href="/stars.css">
     <meta charset="UTF-8">
     <title>Trejd Info</title>
 </head>
@@ -21,13 +22,35 @@
 
     <form method="post" th:action="'/trejdInfo/' + ${trejd.id} + '/addReview/'">
         <h3>Rating: </h3>
-        <select name="rating" class="mb-2">
-            <option th:value="1">1</option>
-            <option th:value="2">2</option>
-            <option th:value="3">3</option>
-            <option th:value="4">4</option>
-            <option th:value="5">5</option>
-        </select>
+        <article class="movie">
+
+            <div class="rating">
+                <img src="/star-gray.png" onclick="clickStar(1)" onmouseenter="hoverStar(1)" onmouseout="leftStar()">
+                <img src="/star-gray.png" onclick="clickStar(2)" onmouseenter="hoverStar(2)" onmouseout="leftStar()">
+                <img src="/star-gray.png" onclick="clickStar(3)" onmouseenter="hoverStar(3)" onmouseout="leftStar()">
+                <img src="/star-gray.png" onclick="clickStar(4)" onmouseenter="hoverStar(4)" onmouseout="leftStar()">
+                <img src="/star-gray.png" onclick="clickStar(5)" onmouseenter="hoverStar(5)" onmouseout="leftStar()">
+            </div>
+
+            <div th:each="review:${reviews}">
+                <p th:text="${review.description}" ></p>
+                <p th:text="${review.rating} + ' poäng'"></p>
+            </div>
+
+            <section class="result">
+                &nbsp;
+            </section>
+
+        </article>
+
+
+<!--        <select name="rating" class="mb-2">-->
+<!--            <option th:value="1">1</option>-->
+<!--            <option th:value="2">2</option>-->
+<!--            <option th:value="3">3</option>-->
+<!--            <option th:value="4">4</option>-->
+<!--            <option th:value="5">5</option>-->
+<!--        </select>-->
         <div class="mb-3">
             <textarea name="description" class="form-control-lg form-control" id="exampleFormControlTextarea1"
                       rows="3"
@@ -37,6 +60,9 @@
     </form>
 
 </div>
+
+</style>
+<script src="/star.js"></script>
 
 </body>
 </html>

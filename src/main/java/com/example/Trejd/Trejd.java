@@ -9,8 +9,8 @@ public class Trejd {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
-    @JoinColumn(name= "offer_id")
-    private OfferTrejd offerTrejd;
+    @JoinColumn(name= "performer_id")
+    private User performer;
 
     @OneToOne
     @JoinColumn(name = "order_id")
@@ -28,8 +28,8 @@ public class Trejd {
         this.completed = completed;
     }*/
 
-    public void setOfferTrejd(OfferTrejd offerTrejd) {
-        this.offerTrejd = offerTrejd;
+    public void setPerformer(User performer) {
+        this.performer = performer;
     }
 
     public void setOrderTrejd(OrderTrejd orderTrejd) {
@@ -40,8 +40,8 @@ public class Trejd {
         return orderTrejd;
     }
 
-    public OfferTrejd getOffer() {
-        return offerTrejd;
+    public User getPerformer() {
+        return performer;
     }
 
     public Long getId() {
