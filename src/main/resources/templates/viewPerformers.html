@@ -37,7 +37,7 @@
 
     <!-- href="/maketrejd/{user.id}" -->
     <form action="/orders" method="POST" th:object="${order}">
-<select th:name="skillId">
+    <select th:name="skillId">
         <option value="0" selected="selected">Choose skill you are looking for</option>
         <option th:each="skill: ${skills}"  th:value="${skill.id}" th:text="${skill.skillName}">
 
