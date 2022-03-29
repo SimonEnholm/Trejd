@@ -2,62 +2,83 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <title>Orders</title>
 </head>
 <body>
 
-    <h1>List of Orders</h1>
+<nav class="navbar navbar-expand-lg navbar-dark py-3 navbar-custom">
+    <div class="container">
+        <img src="/logo.png" alt="logo" width="200px" height="auto">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+            <span class="navbar-toggler-icon "></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navmenu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item ">
+                    <a href="#home" class="nav-link"> <span class="text-custom">SÅ FUNKAR DET </span> </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#trejd" class="nav-link"><span class="text-custom">TJÄNSTER </span> </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#offerlist" class="nav-link"><span class="text-custom">LOGGA IN </span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-    <style>
-        .border {
-        background-color: lightgray;
-        border-style: solid 30px;
-        border-radius: 3px;
-        padding: 15px;
-        margin-top: 15px;
-        margin-bottom: 15px;
-        Margin-right: 500px;
-        Margin-left: 100px;
-        }
-        .center {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        }
+<section class="bg-light text-custom p-5 p-lg-0 pt-lg-5 text-center text-sm-start mb-3">
+    <div class="container auto-center m-4">
+        <div>
+            <h1>Tjänster och Utförare</h1>
+        </div>
 
-        a {
-        color: #333;
-        }
-
-    </style>
-
-    <table>
-
-    </table>
-
-    <!-- href="/maketrejd/{user.id}" -->
+            <!-- href="/maketrejd/{user.id}" -->
     <form action="/orders" method="POST" th:object="${order}">
 <select th:name="skillId">
-        <option value="0" selected="selected">Choose skill you are looking for</option>
+        <option value="0" selected="selected">Välj Tjänst</option>
         <option th:each="skill: ${skills}"  th:value="${skill.id}" th:text="${skill.skillName}">
 
 </select>
-        <button type="submit">Filter</button>
+        <button type="submit">Filtrera</button>
     </form>
         <div th:each="user: ${users}"  th:value="${user.firstName}">
             <a th:if="${isFiltered}==true" th:href="'/maketrejd/' + ${user.id} + '/' + ${skillId}" >
             <div class="border">
                 <img src="https://toppng.com/uploads/preview/instagram-default-profile-picture-11562973083brycehrmyv.png" Height="150" width="auto">
-                <span th:text="${user.firstName}">NAME</span>
-                <span th:text="${user.location}">LOcation</span>
+                <div><span th:text="'Namn: '+${user.firstName}">Namn</span></div>
+                <div><span th:text="'Ort: '+${user.location}">Location</span></div>
+                <div><span th:text="'Rating: '+${user.rating}">Betyg</span></div>
+
 
             </div></a>
         </div>
 
-
-
-<h1>AND SO ON.......</h1>
-
+<h1>Klicka för flera utförare</h1>
+        </div>
+  </div>
+</section>
+<section>
+<footer class="p-5 navbar-custom text-white text-center position-relative">
+    <div class="container">
+        <p class="lead"> Copyright &copy; 2022 Trejd</p>
+        <a href="#" class="position-absolute bottom-0 end-0 p-5">
+            <i class="bi bi-arrow-up-circle h1" ></i>
+        </a>
+    </div>
+</footer>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
 
                 
 
