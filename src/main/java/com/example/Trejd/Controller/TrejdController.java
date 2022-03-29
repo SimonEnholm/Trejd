@@ -32,8 +32,29 @@ public class TrejdController {
     }
 
     @GetMapping("/offerlist")
-    public String getOfferPage(Model model) {
-        model.addAttribute("users", service.getOffersJoinUserJoinSkill());
+    public String getOfferPage(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        List<Skill> skills = service.getAllSkills();
+        model.addAttribute("skills",skills);
+        model.addAttribute("users", service.findAllOrdersSorted(user));
+
+        return "viewOfferList";
+    }
+
+    @PostMapping("/offerlist")
+    public String getAllOrdersFiltered(@RequestParam Long skillId,HttpSession session,Model model) {
+        List<Skill> skills = service.getAllSkills();
+        model.addAttribute("skills",skills);
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("isFiltered",true);
+        model.addAttribute("skillId",skillId);
+        List<OrderTrejd> orders = service.findAllOrdersSortedAndFiltered(user, skillId);
+        for(OrderTrejd o : orders){
+            System.out.println(o.getLocation());
+            System.out.println(o.getDescription());
+
+        }
+        model.addAttribute("wishes", orders);
         return "viewOfferList";
     }
 
@@ -173,9 +194,9 @@ public class TrejdController {
             return "redirect:/login";
         }
 
-        if (trejd.getOffer().getUser().getId() == user.getId()
+        if (trejd.getPerformer().getId() == user.getId()
                 || trejd.getOrder().getUser().getId() == user.getId()) { //vi kollar om den inloggade användaren är involverad i trejden
-            boolean writtenByPerformer = trejd.getOffer().getUser().getId() == user.getId();
+            boolean writtenByPerformer = trejd.getPerformer().getId() == user.getId();
             //vi går in i trejden. Vi kollar dens offer, sen kollar vi på offers user, sen kollar vi på users id, sen
             //kollar vi om det är den som är inloggad
             //vi går in i trejden. Vi kollar dens order, sen kollar vi på orderns user, sen kollar vi på users id, sen
@@ -197,15 +218,15 @@ public class TrejdController {
             return "redirect:/";
         }
 
-        if (trejd.getOffer().getUser().getId() == user.getId()
+        if (trejd.getPerformer().getId() == user.getId()
                 || trejd.getOrder().getUser().getId() == user.getId()) {
-            boolean writtenByPerformer = trejd.getOffer().getUser().getId() == user.getId();
-            Review review = new Review(trejd.getOrder().getUser(), trejd.getOffer().getUser(), trejd, description, rating, writtenByPerformer);
+            boolean writtenByPerformer = trejd.getPerformer().getId() == user.getId();
+            Review review = new Review(trejd.getOrder().getUser(), trejd.getPerformer(), trejd, description, rating, writtenByPerformer);
             service.createReview(review);
 
             User reviewee = writtenByPerformer
                     ? trejd.getOrder().getUser()
-                    : trejd.getOffer().getUser();
+                    : trejd.getPerformer();
 
             List<Review> reviews = service.getReviewsOnUser(reviewee);
             Double averageRating = reviews.stream().mapToDouble(r -> r.getRating()).average().orElse(0.0);

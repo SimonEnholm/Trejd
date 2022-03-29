@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
+    <link rel="stylesheet" href="/stars.css">
     <meta charset="UTF-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,9 +46,12 @@
 
     <h3 th:text="'Medelpoäng ' + ${user.rating}"></h3>
 
+
     <div class="border m-2">
         <img class="center mt-2" src="https://toppng.com/uploads/preview/instagram-default-profile-picture-11562973083brycehrmyv.png" Height="200" width="auto">
         <div style="color:#1A9DA3;">
+
+
             <h3 th:text="${user.firstName}">* USERNAME *</h3>
             <h3 th:text="${selectedSkill.skillName}">* SKILL *</h3>
             <!-- <h2 th:each="skill: ${skills}" th:value="${skill.skillName}" th:text="${skill.skillName}">* SKILLS *</h2>
@@ -70,10 +74,28 @@
 
     <h4> Recensioner </h4>
 
+<!--    <article class="movie">-->
+
+<!--    <div class="rating">-->
+<!--        <img src="/static/star-gray.png" onclick="clickStar(1)" onmouseenter="hoverStar(1)" onmouseout="leftStar()">-->
+<!--        <img src="/static/star-gray.png" onclick="clickStar(2)" onmouseenter="hoverStar(2)" onmouseout="leftStar()">-->
+<!--        <img src="/star-gray.png" onclick="clickStar(3)" onmouseenter="hoverStar(3)" onmouseout="leftStar()">-->
+<!--        <img src="/star-gray.png" onclick="clickStar(4)" onmouseenter="hoverStar(4)" onmouseout="leftStar()">-->
+<!--        <img src="/star-gray.png" onclick="clickStar(5)" onmouseenter="hoverStar(5)" onmouseout="leftStar()">-->
+
+<!--    </div>-->
+
+<!--    <section class="result">-->
+<!--        &nbsp;-->
+<!--    </section>-->
+
+<!--    </article>-->
+
     <div th:each="review:${reviews}">
         <p th:text="${review.description}" ></p>
         <p th:text="${review.rating} + ' poäng'"></p>
     </div>
+
 </div>
 </section>
 <section>
@@ -89,5 +111,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
+
+<!--<script src="/star.js"></script>-->
+
 </body>
 </html>
