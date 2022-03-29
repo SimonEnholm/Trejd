@@ -46,15 +46,14 @@ public class TrejdController {
 //  }
 
     // todo fetmarkering på skillen vi valde.
-  @GetMapping("/maketrejd/{id}")
-
-
-    public String makeTrejdPage(Model model, @PathVariable Long id) {
+  @GetMapping("/maketrejd/{id}/{skillId}")
+    public String makeTrejdPage(Model model, @PathVariable Long id, @PathVariable Long skillId) {
       User user = service.getUserById(id);
       List<Review> reviews = service.getReviewsOnUser(user);
       model.addAttribute("user", user);
       model.addAttribute("reviews", reviews);
-
+      Skill skill = service.getSkillById(skillId);
+      model.addAttribute("selectedSkill",skill);
 //    public String trejdProfilePage(Model model, @PathVariable Long id) {
 //      model.addAttribute("user", service.getUserById(id)); // skicka in från url:en
 
@@ -166,7 +165,7 @@ public class TrejdController {
 
     //Anropas när båda har avslutat trejden. När utföraren är klar och kund godkänt så skickas man till reviewn.
 
-    @GetMapping("/trejdInfo/{id}") //info om specifikt trejd-id
+   /* @GetMapping("/trejdInfo/{id}") //info om specifikt trejd-id
     public String getTrejdInfo(@PathVariable Long id, Model model, HttpSession session) {
         Trejd trejd = service.getTrejd(id); //vi plockar ut hela trejden från databasen baserat på id
         User user = (User) session.getAttribute("user"); //vi plockar ut den inloggade användaren. getAttribute returnerar ett objekt. Den vet inte vad det är för typ, därför berättar vi det för den med (User). Man "castar".
@@ -189,8 +188,8 @@ public class TrejdController {
             return "redirect:/";//har personen inte tillgång till denna sida redirectas den till startsidan
         }
     }
-
-    @PostMapping("/trejdInfo/{trejdId}/addReview/")
+*/
+    /*@PostMapping("/trejdInfo/{trejdId}/addReview/")
     public String addReview(@PathVariable Long trejdId, @RequestParam String description, @RequestParam int rating, HttpSession session) {
         Trejd trejd = service.getTrejd(trejdId);
         User user = (User) session.getAttribute("user");
@@ -219,7 +218,7 @@ public class TrejdController {
 
         return "redirect:/";
     }
-
+*/
 //    @PostMapping("/my-page")
 //    public String createAnOrder(@RequestParam String location, @RequestParam User user, @RequestParam Skill skill, HttpSession session) {
 //        OrderTrejd order = new OrderTrejd(location, user, skill);
@@ -239,11 +238,23 @@ public class TrejdController {
     @GetMapping("/orders")
     public String getOrderPage(Model model,@RequestParam(defaultValue = "distance") String sortedBy,HttpSession session) {
         User user = (User) session.getAttribute("user");
+        List<Skill> skills = service.getAllSkills();
+        model.addAttribute("skills",skills);
         if(sortedBy.equals("distance"))
             model.addAttribute("users", service.findAllUsersSorted(user,true));
         else{
             model.addAttribute("users", service.findAllUsersSorted(user,false));
         }
+        return "viewPerformers";
+    }
+    @PostMapping ("/orders")
+    public String getAllPerformersFiltered(@RequestParam Long skillId,HttpSession session,Model model){
+        List<Skill> skills = service.getAllSkills();
+        model.addAttribute("skills",skills);
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("isFiltered",true);
+        model.addAttribute("skillId",skillId);
+        model.addAttribute("users", service.findAllUsersSortedAndFiltered(user,true,skillId));
         return "viewPerformers";
     }
 
@@ -273,8 +284,10 @@ public class TrejdController {
     }
 
     // todo få med skillen vi valde. bara den ska synas
-    @GetMapping({"/create-order", "/create-order/{performerId}"})
-    public String createOrder(@PathVariable(required = false) Long performerId, HttpSession session, Model model){
+    @GetMapping({"/create-order", "/create-order/{performerId}/{skillId}"})
+    public String createOrder(@PathVariable(required = false) Long performerId,
+                              @PathVariable (required = false) Long skillId, HttpSession session, Model model){
+
         OrderTrejd order = new OrderTrejd();
         //User user = (User) session.getAttribute("user");
 
@@ -283,24 +296,38 @@ public class TrejdController {
 //        }
         List<Skill> skills = service.getAllSkills();
         model.addAttribute("skills", skills);
-        model.addAttribute("order", order);
 
-        if(performerId == null){
-            System.out.println("perfomer ID null");
+        if(performerId != null){
+            System.out.println("Performer not null");
+            if(skillId!=null) {
+                System.out.println("skill id not null");
+                order.setSkill(service.getSkillById(skillId));
+                model.addAttribute("performer",service.getUserById(performerId));
+                model.addAttribute("order", order);
+            }
             return "create-order";
         }
-        model.addAttribute("performer", service.getUserById(performerId)); // skicka in från url:en
+        model.addAttribute("order", order);
+        System.out.println(" null");
         return "create-order";
     }
 
     // todo länkas vart?
     @PostMapping("/create-order")
-    public String saveOrder(@ModelAttribute OrderTrejd order, HttpSession session) {
+    public String saveOrder(@ModelAttribute OrderTrejd order,@RequestParam(required = false) Long performerId, HttpSession session) {
+        //Nice to have: If performer exists sen mail to performer and set order to pending.
         order.setUser( (User) session.getAttribute("user"));
         Skill skill = service.getSkillById(order.getSkillId());
         order.setSkill(skill);
         service.saveOrder(order);
-        return "viewOfferList";
+
+        if(performerId!=null){
+            Trejd trejd = new Trejd();
+            trejd.setOrderTrejd(order);
+            trejd.setCompleted(false);
+            trejd.setPerformer(service.getUserById(performerId));
+        }
+        return "trejdInfo";
     }
 
 

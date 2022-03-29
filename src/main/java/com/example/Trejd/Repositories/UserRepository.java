@@ -17,5 +17,12 @@ public interface UserRepository extends CrudRepository <User, Long> {
 
     @Query(value = "SELECT * FROM user WHERE user.id != ?1", nativeQuery = true)
     List<User> findAllByQuery(Long id);
+
+    @Query(value = "SELECT * FROM user_skills\n" +
+            "join user\n" +
+            "on\n" +
+            "user.id=user_skills.user_id\n" +
+            "where skill_id=?1",nativeQuery = true)
+    List<User> findAllBySkillId(Long skillId);
 }
 
