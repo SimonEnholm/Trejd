@@ -56,7 +56,10 @@
 
     <input type = "hidden" th:field="*{latitude}" id="latitude">
     <input type = "hidden" th:field="*{longitude}" id="longitude">
-    <p id="demo"></p>
+    <div class = "mb-3">
+        <input type="button" class="btn btn-secondary" onclick="getLocation()" value="Get your location"></input>
+        <input type="button" class="btn btn-secondary" onclick="setLocation()" value="Set your location"></input>
+    </div>
 <div class="mb-2">
     <label class="form-label">Skill</label>
     <select th:field="*{skillId}" class="form-select">
@@ -74,10 +77,7 @@
         <button type="submit" class="btn btn-primary mb-3">Confirm</button>
     </div>
 </form>
-    <div class = "mb-3">
-<button class="btn btn-secondary" onclick="getLocation()">Get your location</button>
-        <button class="btn btn-secondary" onclick="setLocation()">Set your location</button>
-</div>
+
 </div>
     <script src="geoScript.js"></script>
 

@@ -20,6 +20,7 @@
 
 </head>
 <body>
+<h1> Create Order</h1>
 <nav class="navbar navbar-expand-lg navbar-dark py-3 navbar-custom">
   <div class="container">
     <img src="/logo.png" alt="logo" width="200px" height="auto">
@@ -50,32 +51,41 @@
 </div>
 <p th:text="${session.firstname}">inloggad firstname</p>
 
-  <form action="" method="POST" th:object="${order}">
+  <form action="/create-order" method="POST" th:object="${order}">
 
+    <div th:if="${performer}!=null">
+      <h3>Performer info</h3>
+        <p>Skill: <span th:text="${order.getSkill().getSkillName}"></span></p>
+      <p>First name: <span th:text="${performer.getFirstName}"></span></p>
+      <p>Last name: <span th:text="${performer.getLastName}"></span></p>
+      <p>Location :<span th:text="${performer.getLocation}"></span></p>
+      <p>Balance: <span th:text="${performer.getBalance}"></span></p>
+      <p>Rating: <span th:text="${performer.getRating}"></span></p>
+      <input type="hidden" th:name="performerId" th:value="${performer.getId}">
+    </div>
+
+    <div th:if="${performer}==null">
     <select th:field="*{skillId}" class="form-select text-custom text-center ">
       <option value="0" selected="selected">Choose skill</option>
       <option th:each="skill: ${skills}"  th:value="${skill.id}" th:text="${skill.skillName}"></select>
 
-    <textarea class="form-select text-custom text-center " name="description" th:field="*{description}" placeholder="Describe your line of work..."></textarea>
-    <!--div th:if>
-      <label for="exampleDataList2" class="form-label">Add second skill</label>
-      <input class="form-control" list="datalistOptions" id="exampleDataList2" placeholder="Type to search...">
-      <datalist id="datalistOptions2">
-        <option th:each="skills: ${skills}"  th:value="${skills.skillName}">
-    </datalist>
-</div-->
-    <div>
-    <label for="FormInput5" class="form-label text-center text-custom mb-4 "></label>
+    <textarea name="description" th:field="*{description}" placeholder="Describe your need..."></textarea>
     </div>
-    <input type="text" th:field="*{location}" class="form-control text-custom text-center " id="FormInput5" placeholder="Get or type your location"><br>
+
+    <label for="FormInput5" class="form-label">Type in or get the location of your need: </label>
+    <input type="text" th:field="*{location}" class="form-control" id="FormInput5" placeholder="Type in or get your location"><br>
 
     <input type = "hidden" th:field="*{latitude}" id="latitude">
     <input type = "hidden" th:field="*{longitude}" id="longitude">
+    <input type="button" onclick="getLocation()" value="Get your location"></input>
+    <input type="button" onclick="setLocation()" value="Set your location"></input>
+    <div class="col-auto">
 
     <div class="col-auto text-center text-custom">
       <button type="submit" class="btn btn-primary mb-3">Confirm</button>
     </div>
 </form>
+
 <div class="col-auto text-center text-custom">
 
 <button onclick="getLocation()"class="btn btn-secondary mb-3 text-center ">Get your location</button>

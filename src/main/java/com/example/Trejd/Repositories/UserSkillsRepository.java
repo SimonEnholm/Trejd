@@ -1,6 +1,7 @@
 package com.example.Trejd.Repositories;
 
 import com.example.Trejd.Skill;
+import com.example.Trejd.User;
 import com.example.Trejd.UserSkills;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

@@ -239,9 +239,24 @@ public class TrejdService {
         }
         return users;
     }
+    public List<User> findAllUsersSortedAndFiltered(User user, Boolean sortByDistance, Long skillId) {
+        List<User> users = userRepo.findAllBySkillId(skillId);
+
+        if(sortByDistance){
+            users = bubbleSortUser(user, users);
+        }
+        else{
+            //sortByRating
+
+        }
+        return users;
+    }
 
     public void saveOrder(OrderTrejd order) {
         orderRepo.save(order);
+    }
+    public OrderTrejd getOrder(Long id) {
+        return orderRepo.findById(id).get();
     }
 
     public void saveUserSkill(UserSkills us) {

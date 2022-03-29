@@ -17,4 +17,5 @@ public interface OrderTrejdRepository extends CrudRepository <OrderTrejd, Long> 
             " JOIN skill ON skill.id = user_skills.skill_id\n" +
             " WHERE location = '?1' AND skill_name = '?2'", nativeQuery = true)
     List<OrderTrejd> findByLocation(String location, String skill);
+
 }

@@ -16,6 +16,7 @@
         <img class="center" src="https://toppng.com/uploads/preview/instagram-default-profile-picture-11562973083brycehrmyv.png" Height="400" width="auto">
         <div>
             <h3 th:text="${user.firstName}">* USERNAME *</h3>
+            <h3 th:text="${selectedSkill.skillName}">* SKILL *</h3>
             <h2 th:each="skill: ${skills}" th:value="${skill.skillName}" th:text="${skill.skillName}">* SKILLS *</h2>
 
             <p>
@@ -27,7 +28,7 @@
             </p>
         </div>
 
-            <a class="trejdbutton" th:href="'/create-order/' + ${user.id}">TREJD</a>
+            <a class="trejdbutton" th:href="'/create-order/' + ${user.id} + '/' + ${selectedSkill.id}">TREJD</a>
      <!--   <form action="/maketrejd/{id}" method="post">
             <button type="submit" class="trejdbutton">trejd</button>   -->
         </form>
