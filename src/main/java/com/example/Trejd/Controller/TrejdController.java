@@ -32,8 +32,29 @@ public class TrejdController {
     }
 
     @GetMapping("/offerlist")
-    public String getOfferPage(Model model) {
-        model.addAttribute("users", service.getOffersJoinUserJoinSkill());
+    public String getOfferPage(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        List<Skill> skills = service.getAllSkills();
+        model.addAttribute("skills",skills);
+        model.addAttribute("users", service.findAllOrdersSorted(user));
+
+        return "viewOfferList";
+    }
+
+    @PostMapping("/offerlist")
+    public String getAllOrdersFiltered(@RequestParam Long skillId,HttpSession session,Model model) {
+        List<Skill> skills = service.getAllSkills();
+        model.addAttribute("skills",skills);
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("isFiltered",true);
+        model.addAttribute("skillId",skillId);
+        List<OrderTrejd> orders = service.findAllOrdersSortedAndFiltered(user, skillId);
+        for(OrderTrejd o : orders){
+            System.out.println(o.getLocation());
+            System.out.println(o.getDescription());
+
+        }
+        model.addAttribute("wishes", orders);
         return "viewOfferList";
     }
 

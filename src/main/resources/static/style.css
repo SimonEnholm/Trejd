@@ -1,4 +1,9 @@
+.performer-info {
+background-color: #F40F5F !important;
+  color: #F40F5F !important;
 
+
+}
 
 .navbar-custom {
   padding: 60px;
@@ -25,6 +30,7 @@
 color:#F40F5F;
 font-family: 'Caveat', cursive;
 }
+
 .btn-custom{
 color:#F40F5F;
 
@@ -43,8 +49,8 @@ color: black;
   background-color: #1A9DA3 !important;
   color: white;
 
-
 }
+
 
 #button2{
   background-color: #F40F5F;
