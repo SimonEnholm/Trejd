@@ -186,7 +186,7 @@ public class TrejdController {
 
     //Anropas när båda har avslutat trejden. När utföraren är klar och kund godkänt så skickas man till reviewn.
 
-   /* @GetMapping("/trejdInfo/{id}") //info om specifikt trejd-id
+   @GetMapping("/trejdInfo/{id}") //info om specifikt trejd-id
     public String getTrejdInfo(@PathVariable Long id, Model model, HttpSession session) {
         Trejd trejd = service.getTrejd(id); //vi plockar ut hela trejden från databasen baserat på id
         User user = (User) session.getAttribute("user"); //vi plockar ut den inloggade användaren. getAttribute returnerar ett objekt. Den vet inte vad det är för typ, därför berättar vi det för den med (User). Man "castar".
@@ -209,8 +209,8 @@ public class TrejdController {
             return "redirect:/";//har personen inte tillgång till denna sida redirectas den till startsidan
         }
     }
-*/
-    /*@PostMapping("/trejdInfo/{trejdId}/addReview/")
+
+    @PostMapping("/trejdInfo/{trejdId}/addReview/")
     public String addReview(@PathVariable Long trejdId, @RequestParam String description, @RequestParam int rating, HttpSession session) {
         Trejd trejd = service.getTrejd(trejdId);
         User user = (User) session.getAttribute("user");
@@ -239,7 +239,7 @@ public class TrejdController {
 
         return "redirect:/";
     }
-*/
+
 //    @PostMapping("/my-page")
 //    public String createAnOrder(@RequestParam String location, @RequestParam User user, @RequestParam Skill skill, HttpSession session) {
 //        OrderTrejd order = new OrderTrejd(location, user, skill);
@@ -250,7 +250,7 @@ public class TrejdController {
 //    @PostMapping("/my-page")
 //   public String updateMyInfo(@RequestParam String firstName,@RequestParam String lastName,@RequestParam String password,@RequestParam String email) {
 //        //skills???
-//        User user = new User(firstName, lastName, password, email);
+////        User user = new User(firstName, lastName, password, email);
 //        service.createUser(user);
 //        return "my-page";
 //    }
