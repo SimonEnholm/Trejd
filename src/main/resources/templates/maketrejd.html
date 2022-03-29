@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
+    <link rel="stylesheet" href="/stars.css">
     <meta charset="UTF-8">
     <title>Make Trejd</title>
 </head>
@@ -11,6 +12,8 @@
     <h1 th:text="${user.firstName}"></h1>
 
     <h3 th:text="'Medelpoäng ' + ${user.rating}"></h3>
+
+
 
     <div class="border">
         <img class="center" src="https://toppng.com/uploads/preview/instagram-default-profile-picture-11562973083brycehrmyv.png" Height="400" width="auto">
@@ -35,6 +38,23 @@
     </div>
 
     <h4> Recensioner </h4>
+
+<!--    <article class="movie">-->
+
+<!--    <div class="rating">-->
+<!--        <img src="/static/star-gray.png" onclick="clickStar(1)" onmouseenter="hoverStar(1)" onmouseout="leftStar()">-->
+<!--        <img src="/static/star-gray.png" onclick="clickStar(2)" onmouseenter="hoverStar(2)" onmouseout="leftStar()">-->
+<!--        <img src="/star-gray.png" onclick="clickStar(3)" onmouseenter="hoverStar(3)" onmouseout="leftStar()">-->
+<!--        <img src="/star-gray.png" onclick="clickStar(4)" onmouseenter="hoverStar(4)" onmouseout="leftStar()">-->
+<!--        <img src="/star-gray.png" onclick="clickStar(5)" onmouseenter="hoverStar(5)" onmouseout="leftStar()">-->
+
+<!--    </div>-->
+
+<!--    <section class="result">-->
+<!--        &nbsp;-->
+<!--    </section>-->
+
+<!--    </article>-->
 
     <div th:each="review:${reviews}">
         <p th:text="${review.description}" ></p>
@@ -78,5 +98,6 @@
 
 
 </style>
+<!--<script src="/star.js"></script>-->
 </body>
 </html>
