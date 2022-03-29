@@ -262,6 +262,41 @@ public class TrejdService {
     public void saveUserSkill(UserSkills us) {
         userSkillsRepo.save(us);
     }
+
+    public List<OrderTrejd> bubbleSortOrder(User user, List<OrderTrejd> listToSort) {
+
+
+        for (int j = 0; j < listToSort.size(); j++) {
+
+            // Gå igenom array förutom sista då den redan är högsta (-j)
+            for (int i = 1; i < listToSort.size()-j; i++) {
+
+                if(calculate(user,listToSort.get(i).getUser()) < calculate(user,listToSort.get(i-1).getUser()))
+                    swapOrder(listToSort,i,i-1);
+            }
+        }
+        return listToSort;
+    }
+
+    private static void swapOrder(List<OrderTrejd> orders, int from, int to) {
+
+        OrderTrejd temp = orders.get(from);
+        orders.set(from,orders.get(to));
+        orders.set(to,temp);
+
+    }
+
+    public List<OrderTrejd> findAllOrdersSortedAndFiltered(User user, Long skillId) {
+        List <OrderTrejd> orders = orderRepo.findAllBySkillId(skillId);
+
+        return bubbleSortOrder(user, orders);
+    }
+
+    public Object findAllOrdersSorted(User user) {
+        List<OrderTrejd> orders = (List<OrderTrejd>) orderRepo.findAll();
+        return bubbleSortOrder(user, orders);
+
+    }
 }
 
 
