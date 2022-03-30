@@ -48,7 +48,9 @@ public class User {
      this.email = email;
      this.password = password;
  }
-
+    public Long getSkillId1() {
+        return skillId1;
+    }
     public void setSkillId1(Long skillId1) {
         this.skillId1 = skillId1;
     }
@@ -71,14 +73,6 @@ public class User {
 
     public double getLatitude() {
         return latitude;
-    }
-
-    public Long getSkillId1() {
-        return skillId1;
-    }
-
-    public void setSkillId(Long skillId1) {
-        this.skillId1 = skillId1;
     }
 
     public void setLatitude(double latitude) {

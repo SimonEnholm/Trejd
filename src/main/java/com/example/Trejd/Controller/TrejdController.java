@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -26,10 +27,30 @@ public class TrejdController {
     TrejdService service;
 
     @GetMapping("/")
-    public String showStartPage() {
-
-
+    public String showStartPage(Model model) {
+        User user = new User();
+        model.addAttribute("user",user);
         return "home";
+    }
+    @PostMapping("/")
+    public String checkLogin(@ModelAttribute User user, HttpSession session, BindingResult result) {
+        System.out.println("TeSTARRR");
+
+        ValidationUtils.rejectIfEmpty(result,"email","Email cant be empty");
+        ValidationUtils.rejectIfEmpty(result,"password","Password cant be empty");
+
+        if(result.hasErrors()){
+            return "home";
+        }
+
+        if (service.getUser(user.getEmail(), user.getPassword()) != null) {
+            session.setAttribute("user", user);
+            return "my-page";
+        } else {
+            //TODO: Print on page.
+            System.out.println("No such user!");
+            return "home";
+        }
     }
 
     @GetMapping("/logout")
@@ -114,20 +135,7 @@ public class TrejdController {
 //      return "tack";
 //  }
 
-    @PostMapping("/")
-    public String checkLogin(@RequestParam String email, @RequestParam String password,HttpSession session) {
-        System.out.println("TeSTARRR");
-        User user = service.getUser(email, password);
 
-        if (user != null) {
-            System.out.println("test");
-            session.setAttribute("user", user);
-            return "my-page";
-        } else {
-            System.out.println("No such user!");
-            return "home";
-        }
-    }
 
     //-- Here we also need the postmapping for create user click on the button should send us to create new user page -->
 
@@ -179,8 +187,8 @@ public class TrejdController {
 
     @GetMapping("/my-page")
     public String getMyPage(HttpSession session) {
-      String user = (String) session.getAttribute("user");
-
+      User user = (User)session.getAttribute("user");
+      // String user = (String) session.getAttribute("user");
       // if no user restrict view.
         return "my-page";
     }
@@ -299,15 +307,14 @@ public class TrejdController {
     @GetMapping("/create-user")
     public String viewUserPage(Model model){
         User user = new User();
-        List<Skill> skills = service.getAllSkills();
-        model.addAttribute("skills",skills);
+        Map<String,List<Skill>> skillsAndCat = service.getAllSkillsAndCategories();
+        model.addAttribute("skills",skillsAndCat);
         model.addAttribute("user",user);
         return "create-user";
     }
 
     @PostMapping("/create-user")
     public String createUserPage(@ModelAttribute User user, Model model,HttpSession session,BindingResult result){
-
         //Validation
         ValidationUtils.rejectIfEmpty(result,"firstName","First name cant be empty");
         ValidationUtils.rejectIfEmpty(result,"lastName","Last name cant be empty");
@@ -315,38 +322,37 @@ public class TrejdController {
         ValidationUtils.rejectIfEmpty(result,"password","Password cant be empty");
         ValidationUtils.rejectIfEmpty(result,"location","Location cant be empty");
         ValidationUtils.rejectIfEmpty(result,"skillId1","Skill cant be empty");
+
         if(result.hasErrors()){
+            return "redirect:/create-user";
+        }
+        if(!service.saveUser(user)){
+            System.out.println("User already exist!");
             return "create-user";
         }
-
-        if(!service.saveUser(user)) {
-                System.out.println("User already exist!");
-                return "create-user";
-            }
-
 
         Skill skill = service.getSkillById(user.getSkillId1());
         Skill skill2 = service.getSkillById(user.getSkillId2());
         Skill skill3 = service.getSkillById(user.getSkillId3());
         UserSkills us = new UserSkills();
-        UserSkills us2 = new UserSkills();
-        UserSkills us3 = new UserSkills();
         us.setSkill(skill);
         us.setUser(user);
         service.saveUserSkill(us);
+        UserSkills us2 = new UserSkills();
+        UserSkills us3 = new UserSkills();
 
-        if(us2!=null) {
+
+        if(user.getSkillId2()!=null) {
             us2.setSkill(skill2);
             us2.setUser(user);
             service.saveUserSkill(us2);
         }
-        if(us3!=null) {
+        if(user.getSkillId2()!=null) {
             us3.setSkill(skill3);
             us3.setUser(user);
             service.saveUserSkill(us3);
         }
         session.setAttribute("user",user);
-
 
         return "my-page";
     }
@@ -362,8 +368,10 @@ public class TrejdController {
 //        if(order.getSkillId()==0){
 //            return "create-order";
 //        }
-        List<Skill> skills = service.getAllSkills();
-        model.addAttribute("skills", skills);
+        Map<String,List<Skill>> skillsAndCat = service.getAllSkillsAndCategories();
+        model.addAttribute("skills",skillsAndCat);
+        //List<Skill> skills = service.getAllSkills();
+        //model.addAttribute("skills", skills);
 
         if(performerId != null){
             System.out.println("Performer not null");
@@ -388,6 +396,7 @@ public class TrejdController {
         Skill skill = service.getSkillById(order.getSkillId());
         order.setSkill(skill);
         service.saveOrder(order);
+
         Trejd trejd = new Trejd();
         trejd.setOrderTrejd(order);
         trejd.setCompleted(false);
