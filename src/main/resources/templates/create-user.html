@@ -66,21 +66,27 @@
             <label class="form-label">Skill</label><span class="error" th:if="${#fields.hasErrors('skillId1')}">Field can't be empty</span>
             <select th:field="*{skillId1}" class="form-select" onchange="displayNewDropdown(1)">
                 <option value="0" selected="selected">Välj skill</option>
-                <option th:each="skill: ${skills}"  th:value="${skill.id}" th:text="${skill.skillName}">
+                <optgroup th:each="cat : ${skills}"  th:label="${cat.key}">
+                <option th:each="skill : ${cat.value}"  th:value="${skill.id}" th:text="${skill.skillName}">
+                </option>
             </select>
         </div>
         <div class="mb-2" id="dropdown1" >
             <label class="form-label">Skill</label>
             <select th:field="*{skillId2}" class="form-select" onchange="displayNewDropdown(2)">
                 <option value="0" selected="selected">Välj skill</option>
-                <option th:each="skill: ${skills}"  th:value="${skill.id}" th:text="${skill.skillName}">
+                <optgroup th:each="cat : ${skills}"  th:label="${cat.key}">
+                    <option th:each="skill : ${cat.value}"  th:value="${skill.id}" th:text="${skill.skillName}">
+                    </option>
             </select>
         </div>
         <div class="mb-2" id="dropdown2">
             <label class="form-label">Skill</label>
             <select th:field="*{skillId3}" class="form-select" onchange="displayNewDropdown(0)">
                 <option value="0" selected="selected">Välj skill</option>
-                <option th:each="skill: ${skills}"  th:value="${skill.id}" th:text="${skill.skillName}">
+                <optgroup th:each="cat : ${skills}"  th:label="${cat.key}">
+                    <option th:each="skill : ${cat.value}"  th:value="${skill.id}" th:text="${skill.skillName}">
+                    </option>
             </select>
         </div>
 
