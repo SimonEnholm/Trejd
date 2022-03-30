@@ -28,7 +28,7 @@
                     <a href="#trejd" class="nav-link"><span class="text-custom">TJÄNSTER </span> </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#offerlist" class="nav-link"><span class="text-custom">LOGGA IN </span></a>
+                    <a href="/logout" class="nav-link"><span class="text-custom">LOGGA UT </span></a>
                 </li>
             </ul>
         </div>
@@ -65,7 +65,10 @@
             </p>
         </div>
 
-            <a class="trejdbutton" th:href="'/create-order/' + ${user.id} + '/' + ${selectedSkill.id}">TREJD</a>
+
+        <div class="col-auto text-center text-custom">
+            <a th:href="'/create-order/' + ${user.id} + '/' + ${selectedSkill.id}" class="btn btn-secondary mb-3">TREJD</a>
+        </div>
      <!--   <form action="/maketrejd/{id}" method="post">
             <button type="submit" class="trejdbutton">trejd</button>   -->
         </form>

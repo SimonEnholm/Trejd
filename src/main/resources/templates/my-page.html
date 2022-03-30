@@ -39,13 +39,13 @@
                     <a href="#trejd" class="nav-link"><span class="text-custom">TJÄNSTER </span> </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#offerlist" class="nav-link"><span class="text-custom">LOGGA IN </span></a>
+                    <a href="/logout" class="nav-link"><span class="text-custom">LOGGA UT </span></a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
-<h1 class ="text-center"> My Page</h1>
+<h1 th:text="'Welcome ' + ${session.user.firstName} + '!'" class ="text-center"> </h1>
 </div>
 <div>
     <img src="icon_my_page.JPG"

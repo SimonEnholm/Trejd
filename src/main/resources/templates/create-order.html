@@ -35,7 +35,7 @@
           <a href="#trejd" class="nav-link"><span class="text-custom">TJÄNSTER </span> </a>
         </li>
         <li class="nav-item" >
-          <a href="#offerlist" class="nav-link"><span class="text-custom">LOGGA IN </span></a>
+          <a href="/logout" class="nav-link"><span class="text-custom">LOGGA UT </span></a>
         </li>
       </ul>
     </div>
@@ -59,7 +59,7 @@
         <h4>Skill: <span th:text="${order.getSkill().getSkillName}"></span></h4>
         <p>Name: <span th:text="${performer.getFirstName} + ' ' + ${performer.getLastName}"></span></p>
 
-      <p> Last name: <span th:text="${performer.getLastName}" ></span></p>
+     <!-- <p> Last name: <span th:text="${performer.getLastName}" ></span></p> -->
       <p>Location :<span th:text="${performer.getLocation}"></span></p>
       <p>Balance: <span th:text="${performer.getBalance}"></span></p>
       <p>Rating: <span th:text="${performer.getRating}"></span></p>
@@ -90,6 +90,9 @@
     <div class="col-auto text-center text-custom">
       <button type="submit" class="btn btn-primary mb-3">Confirm</button>
     </div>
+        <div class="col-auto text-center text-custom">
+            <span onclick="history.back()" class="btn btn-secondary mb-3">Back</span>
+        </div>
     </div>
 </form>
 
@@ -109,5 +112,6 @@
   </div>
 </footer>
 
+<script src="/geoScript.js"></script>
 </body>
 </html>

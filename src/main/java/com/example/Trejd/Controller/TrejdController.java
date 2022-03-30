@@ -32,6 +32,12 @@ public class TrejdController {
         return "home";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "home";
+    }
+
     @GetMapping("/offerlist")
     public String getOfferPage(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
@@ -82,6 +88,15 @@ public class TrejdController {
       model.addAttribute("skills", service.getUserSkills(id));
       return "maketrejd";
   }
+
+    @PostMapping("/maketrejd/")
+    public String createTrejd(HttpSession session, @RequestParam Long performerId, Model model){
+        User user = (User) session.getAttribute("user");
+       // model.addAttribute("order", service.createTrejd(user, performerId));
+
+
+        return "tack";
+    }
 
 
 
@@ -164,7 +179,8 @@ public class TrejdController {
 
     @GetMapping("/my-page")
     public String getMyPage(HttpSession session) {
-      User user = (User)session.getAttribute("user");
+      String user = (String) session.getAttribute("user");
+
       // if no user restrict view.
         return "my-page";
     }
@@ -292,10 +308,23 @@ public class TrejdController {
     @PostMapping("/create-user")
     public String createUserPage(@ModelAttribute User user, Model model,HttpSession session,BindingResult result){
 
-        if(!service.saveUser(user)){
-            System.out.println("User already exist!");
+        //Validation
+        ValidationUtils.rejectIfEmpty(result,"firstName","First name cant be empty");
+        ValidationUtils.rejectIfEmpty(result,"lastName","Last name cant be empty");
+        ValidationUtils.rejectIfEmpty(result,"email","Email cant be empty");
+        ValidationUtils.rejectIfEmpty(result,"password","Password cant be empty");
+        ValidationUtils.rejectIfEmpty(result,"location","Location cant be empty");
+        ValidationUtils.rejectIfEmpty(result,"skillId1","Skill cant be empty");
+        if(result.hasErrors()){
             return "create-user";
         }
+
+        if(!service.saveUser(user)) {
+                System.out.println("User already exist!");
+                return "create-user";
+            }
+
+
         Skill skill = service.getSkillById(user.getSkillId1());
         Skill skill2 = service.getSkillById(user.getSkillId2());
         Skill skill3 = service.getSkillById(user.getSkillId3());
@@ -318,16 +347,7 @@ public class TrejdController {
         }
         session.setAttribute("user",user);
 
-        //Validation
-        ValidationUtils.rejectIfEmpty(result,"firstName","First name cant be empty");
-        ValidationUtils.rejectIfEmpty(result,"lastName","Last name cant be empty");
-        ValidationUtils.rejectIfEmpty(result,"email","Email cant be empty");
-        ValidationUtils.rejectIfEmpty(result,"password","Password cant be empty");
-        ValidationUtils.rejectIfEmpty(result,"location","Location cant be empty");
-        ValidationUtils.rejectIfEmpty(result,"skillId1","Skill cant be empty");
-        if(result.hasErrors()){
-            return "create-user";
-        }
+
         return "my-page";
     }
 
@@ -361,8 +381,8 @@ public class TrejdController {
     }
 
     // todo länkas vart?
-    @PostMapping("/create-order")
-    public String saveOrder(@ModelAttribute OrderTrejd order,@RequestParam(required = false) Long performerId, HttpSession session) {
+    @PostMapping({"/create-order", "/create-order/{performerId}/{skillId}"})
+    public String saveOrder(@ModelAttribute OrderTrejd order,@RequestParam(required = false) Long performerId, HttpSession session, Model model) {
         //Nice to have: If performer exists sen mail to performer and set order to pending.
         order.setUser( (User) session.getAttribute("user"));
         Skill skill = service.getSkillById(order.getSkillId());
@@ -371,12 +391,22 @@ public class TrejdController {
         Trejd trejd = new Trejd();
         trejd.setOrderTrejd(order);
         trejd.setCompleted(false);
-        if(performerId!=null){
-            trejd.setPerformer(service.getUserById(performerId));
+        if(performerId==null){
+            service.saveTrejd(trejd);
+            return "order-confirm";
         }
+        trejd.setPerformer(service.getUserById(performerId));
+        service.saveTrejd(trejd); // denna satt utanför if satsen innan. testar om det funkar..
+        model.addAttribute("trejd", service.getLastTrejd());
+        return "trejd-confirm";
+    }
 
-        service.saveTrejd(trejd);
-        return "order-confirm";
+    @GetMapping("/trejd-confirm")
+    public String trejdConfirm(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        Trejd trejd = service.getLastTrejd();
+        model.addAttribute("trejd", trejd);
+        return "trejd-confirm";
     }
 
 }

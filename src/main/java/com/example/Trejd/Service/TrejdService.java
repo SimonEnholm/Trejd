@@ -9,6 +9,7 @@ import com.example.Trejd.Repositories.*;
 import com.example.Trejd.Skill;
 import com.example.Trejd.Repositories.UserRepository;
 import com.example.Trejd.User;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -296,6 +297,10 @@ public class TrejdService {
         List<OrderTrejd> orders = (List<OrderTrejd>) orderRepo.findAll();
         return bubbleSortOrder(user, orders);
 
+    }
+
+    public Trejd getLastTrejd() {
+        return trejdRepo.getLastTrejd();
     }
 }
 

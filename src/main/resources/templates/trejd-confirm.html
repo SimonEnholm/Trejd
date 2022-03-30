@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,7 +36,7 @@
 </nav>
 
 <div class="container-fluid p-5  text-custom text-center">
-    <h1 class="display-1">Tack för din order</h1>
+    <h1 class="display-1">Tack för din TREJD</h1>
     <p class="display 2">En utövare kontaktar dig snarast!</p>
 </div>
 
@@ -51,7 +51,7 @@
 </div>
 
 <div class="col-auto text-center text-custom">
-    <a href="" class="btn btn-secondary mb-3">Till Review</a>
+    <a th:href="'/trejdInfo/' + ${trejd.id}" class="btn btn-secondary mb-3">Till Review</a>
 </div>
 
 <footer class="p-5 navbar-custom text-white text-center position-relative">
