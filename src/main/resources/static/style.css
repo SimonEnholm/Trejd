@@ -4,6 +4,11 @@ background-color: #F40F5F !important;
 
 
 }
+.error{
+margin-left:20px;
+color:black;
+}
+
 
 .navbar-custom {
   padding: 60px;

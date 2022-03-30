@@ -8,6 +8,7 @@ import com.example.Trejd.Service.TrejdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
@@ -289,18 +290,44 @@ public class TrejdController {
     }
 
     @PostMapping("/create-user")
-    public String createUserPage(@ModelAttribute User user, Model model,HttpSession session){
+    public String createUserPage(@ModelAttribute User user, Model model,HttpSession session,BindingResult result){
 
         if(!service.saveUser(user)){
             System.out.println("User already exist!");
             return "create-user";
         }
-        Skill skill = service.getSkillById(user.getSkillId());
+        Skill skill = service.getSkillById(user.getSkillId1());
+        Skill skill2 = service.getSkillById(user.getSkillId2());
+        Skill skill3 = service.getSkillById(user.getSkillId3());
         UserSkills us = new UserSkills();
+        UserSkills us2 = new UserSkills();
+        UserSkills us3 = new UserSkills();
         us.setSkill(skill);
         us.setUser(user);
         service.saveUserSkill(us);
+
+        if(us2!=null) {
+            us2.setSkill(skill2);
+            us2.setUser(user);
+            service.saveUserSkill(us2);
+        }
+        if(us3!=null) {
+            us3.setSkill(skill3);
+            us3.setUser(user);
+            service.saveUserSkill(us3);
+        }
         session.setAttribute("user",user);
+
+        //Validation
+        ValidationUtils.rejectIfEmpty(result,"firstName","First name cant be empty");
+        ValidationUtils.rejectIfEmpty(result,"lastName","Last name cant be empty");
+        ValidationUtils.rejectIfEmpty(result,"email","Email cant be empty");
+        ValidationUtils.rejectIfEmpty(result,"password","Password cant be empty");
+        ValidationUtils.rejectIfEmpty(result,"location","Location cant be empty");
+        ValidationUtils.rejectIfEmpty(result,"skillId1","Skill cant be empty");
+        if(result.hasErrors()){
+            return "create-user";
+        }
         return "my-page";
     }
 
@@ -341,20 +368,15 @@ public class TrejdController {
         Skill skill = service.getSkillById(order.getSkillId());
         order.setSkill(skill);
         service.saveOrder(order);
-
+        Trejd trejd = new Trejd();
+        trejd.setOrderTrejd(order);
+        trejd.setCompleted(false);
         if(performerId!=null){
-            Trejd trejd = new Trejd();
-            trejd.setOrderTrejd(order);
-            trejd.setCompleted(false);
             trejd.setPerformer(service.getUserById(performerId));
         }
-        return "trejdInfo";
+
+        service.saveTrejd(trejd);
+        return "order-confirm";
     }
-
-
-
-
-
-
 
 }
