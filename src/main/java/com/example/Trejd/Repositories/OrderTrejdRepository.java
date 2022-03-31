@@ -18,6 +18,8 @@ public interface OrderTrejdRepository extends CrudRepository <OrderTrejd, Long> 
             " WHERE location = '?1' AND skill_name = '?2'", nativeQuery = true)
     List<OrderTrejd> findByLocation(String location, String skill);
 
-    @Query(value = "SELECT * FROM ORDER_TREJD WHERE skill = ?1", nativeQuery = true)
-    List<OrderTrejd> findAllBySkillId(Long skillId);
+    @Query(value = "SELECT * FROM order_trejd \n" +
+            "WHERE skill = ?1\n" +
+            "AND user_id != ?2", nativeQuery = true)
+    List<OrderTrejd> findAllBySkillId(Long skillId, Long id);
 }
