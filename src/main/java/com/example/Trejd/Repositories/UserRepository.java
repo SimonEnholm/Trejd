@@ -24,5 +24,8 @@ public interface UserRepository extends CrudRepository <User, Long> {
             "user.id=user_skills.user_id\n" +
             "where skill_id=?1",nativeQuery = true)
     List<User> findAllBySkillId(Long skillId);
+
+   @Query(value = "UPDATE user SET firstName =?1, lastName =?2, email=?3, password=?4 Where Id=?5", nativeQuery = true)
+    User updateUser(String firstName, String lastName, String email, String password, Long Id);
 }
 

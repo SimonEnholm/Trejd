@@ -1,13 +1,11 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <!-- Required meta tags -->
-
-
     <meta charset="utf-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/style.css">
@@ -27,30 +25,32 @@
 <nav class="navbar navbar-expand-lg navbar-dark py-3 navbar-custom text-custom">
     <div class="container">
         <img src="/logo.png" alt="logo" width="200px" height="auto">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navmenu">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item ">
-                    <a href="#home" class="nav-link"> <span class="text-custom">SÅ FUNKAR DET </span> </a>
+                    <a href="/info" class="nav-link"> <span class="text-custom">SÅ FUNKAR DET </span> </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#trejd" class="nav-link"><span class="text-custom">TJÄNSTER </span> </a>
+                    <a href="/orders" class="nav-link"><span class="text-custom">TJÄNSTER </span> </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#offerlist" class="nav-link"><span class="text-custom">LOGGA IN </span></a>
+                    <a href="/" class="nav-link"><span class="text-custom">LOGGA IN </span></a>
                 </li>
             </ul>
-        </div>
-    </div>
+                   </div>
+         </div>
 </nav>
-<h1 th:text="'Welcome ' + ${session.user.firstName}" class ="text-center"> My Page</h1>
+
+
 </div>
 <div>
     <img src="icon_my_page.JPG"
          style="height:150px" class="center">
 </div>
+
 <div class="container">
     <img src="" alt="">
     <section class="text-custom text-center mb-4">
@@ -77,9 +77,16 @@
         <div>
             <a href="offerlist">
 
-            <button type="button" class="btn btn-primary mb-3" >Se Orders</button>            </a>
+            <button type="button" class="btn btn-primary mb-3" >Se Orders</button>
             </a>
-
+        </div>
+        <div>
+            <a href="/updateuserinfo">
+                <button type="button" class="btn btn-primary mb-3" >Uppdatera Mina Uppgifter </button>
+            </a>
+        </div>
+        <div class="col-auto text-center text-custom">
+            <span onclick="history.back()" class="btn btn-secondary mb-3">Back</span>
         </div>
     </section>
 </div>
