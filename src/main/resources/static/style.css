@@ -42,11 +42,16 @@ color:black;
 color:#F40F5F;
 font-family: 'Caveat', cursive;
 }
+
 .text-custom a{
     text-decoration: none!important;
     -webkit-box-shadow: none!important;
     box-shadow: none!important;}
 
+.text-custom_two {
+color:black;
+font-family: 'Caveat', cursive;
+}
 
 .btn-custom{
 color:#F40F5F;
