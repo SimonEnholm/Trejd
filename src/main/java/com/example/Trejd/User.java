@@ -29,6 +29,7 @@ public class User {
     private double latitude;
     private double longitude;
     private String location;
+    private String image;
 
 
     public User() {
@@ -110,6 +111,12 @@ public class User {
     public void setBalance(double balance) {
         this.balance = balance;
     }
+    public void addToBalance(double workHours){
+        balance += workHours;
+    }
+    public void subtractFromBalance(double workHours){
+        balance -= workHours;
+    }
 
     public double getRating() {
         return rating;
@@ -157,5 +164,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

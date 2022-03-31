@@ -57,7 +57,11 @@
     <label for="FormInput4" class="form-label">Lösenord</label><span class="error" th:if="${#fields.hasErrors('password')}">Field can't be empty</span>
     <input type="password" th:field="*{password}" class="form-control" id="FormInput4" placeholder="password">
 
-    <label for="FormInput5" class="form-label">Location</label><span class="error" th:if="${#fields.hasErrors('location')}">Field can't be empty</span>
+        <label for="FormInput6" class="form-label">Bild</label><span class="error" th:if="${#fields.hasErrors('image')}">Field can't be empty</span>
+        <input type="file" th:field="*{image}" accept="image/*" class="form-control" id="FormInput6" placeholder="Bild">
+
+
+        <label for="FormInput5" class="form-label">Location</label><span class="error" th:if="${#fields.hasErrors('location')}">Field can't be empty</span>
     <input type="text" th:field="*{location}" class="form-control" id="FormInput5" placeholder="Get or type your location"><br>
 
     <input type = "hidden" th:field="*{latitude}" id="latitude">

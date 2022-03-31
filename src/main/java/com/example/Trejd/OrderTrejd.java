@@ -19,6 +19,8 @@ public class OrderTrejd {
     private Long skillId;
     @Lob
     private String description;
+
+    private double estimatedTime;
     private double longitude;
     private double latitude;
 
@@ -29,6 +31,14 @@ public class OrderTrejd {
         this.location = location;
         this.user = user;
         this.skill = skill;
+    }
+
+    public double getEstimatedTime() {
+        return estimatedTime;
+    }
+
+    public void setEstimatedTime(double estimatedTime) {
+        this.estimatedTime = estimatedTime;
     }
 
     public Long getSkillId() {
