@@ -48,7 +48,12 @@
 
 
     <div class="border m-2">
-        <img class="center mt-2" src="https://toppng.com/uploads/preview/instagram-default-profile-picture-11562973083brycehrmyv.png" Height="200" width="auto">
+        <div th:if="${user.getImage!=null && user.getImage!=''}">
+            <img th:src="'/images/'+${user.getImage}" style="height:150px" class="user-image center">
+        </div>
+        <div th:if="${user.getImage==null || user.getImage ==''}">
+            <img src="/images/icon.png" style="height:150px" class="user-image border-none center">
+        </div>
         <div style="color:#1A9DA3;">
 
 

@@ -8,7 +8,13 @@ background-color: #F40F5F !important;
 margin-left:20px;
 color:black;
 }
-
+.user-image{
+border-radius: 50%;
+border: 1px solid #1A9DA3;
+}
+.border-none{
+border:none;
+}
 
 .navbar-custom {
   padding: 60px;

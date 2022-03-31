@@ -170,7 +170,7 @@ public class TrejdController {
 
 
     @GetMapping("/my-page")
-    public String getMyPage(HttpSession session) {
+    public String getMyPage(HttpSession session, Model model) {
       User user = (User)session.getAttribute("user");
       // if no user restrict view.
         return "my-page";
@@ -242,9 +242,9 @@ public class TrejdController {
                 reviewee.setRating(averageRating);
                 service.saveUser(reviewee);
             }
+            service.transferTime(trejd.getPerformer(), user,trejd.getOrder().getEstimatedTime());
             return "tack";
         }
-
         return "redirect:/";
     }
 
@@ -305,7 +305,8 @@ public class TrejdController {
         ValidationUtils.rejectIfEmpty(result,"password","Password cant be empty");
         ValidationUtils.rejectIfEmpty(result,"location","Location cant be empty");
         ValidationUtils.rejectIfEmpty(result,"skillId1","Skill cant be empty");
-
+        ValidationUtils.rejectIfEmpty(result,"image","Image cant be empty");
+        System.out.println(user.getImage());
         if(result.hasErrors()){
             return "redirect:/create-user";
         }
@@ -346,6 +347,8 @@ public class TrejdController {
                               @PathVariable (required = false) Long skillId, HttpSession session, Model model){
         System.out.println("NU");
         OrderTrejd order = new OrderTrejd();
+        User user = (User) session.getAttribute("user");
+        order.setUser(user);
 
         Map<String,List<Skill>> skillsAndCat = service.getAllSkillsAndCategories();
         model.addAttribute("skills",skillsAndCat);

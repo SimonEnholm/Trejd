@@ -1,11 +1,8 @@
 package com.example.Trejd.Service;
 import com.example.Trejd.*;
 import com.example.Trejd.Repositories.*;
-import com.example.Trejd.*;
-import com.example.Trejd.Repositories.*;
 import com.example.Trejd.Category;
 import com.example.Trejd.OfferTrejd;
-import com.example.Trejd.Repositories.*;
 import com.example.Trejd.Skill;
 import com.example.Trejd.Repositories.UserRepository;
 import com.example.Trejd.User;
@@ -307,6 +304,13 @@ public class TrejdService {
     public Object findAllOrdersSorted(User user) {
         List<OrderTrejd> orders = (List<OrderTrejd>) orderRepo.findAll();
         return bubbleSortOrder(user, orders);
+
+    }
+
+    public void transferTime(User performer, User user, double estimatedTime) {
+        double userSaldo = user.getBalance();
+        user.subtractFromBalance(estimatedTime);
+        performer.addToBalance(estimatedTime);
 
     }
 }

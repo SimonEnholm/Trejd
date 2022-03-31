@@ -55,7 +55,13 @@
         <div th:each="per: ${performers}">
             <a th:if="${isFiltered}==true" th:href="'/maketrejd/' + ${per.id} + '/' + ${skillId}" >
             <div class="border">
-                <img src="https://toppng.com/uploads/preview/instagram-default-profile-picture-11562973083brycehrmyv.png" Height="150" width="auto">
+                <div th:if="${per.getImage!=null && per.getImage!=''}">
+                    <img th:src="'/images/'+${per.getImage}" style="height:150px" class="user-image center">
+                </div>
+                <div th:if="${per.getImage==null || per.getImage ==''}">
+                    <img src="/images/icon.png" style="height:150px" class="user-image border-none center">
+                </div>
+                <!--img src="https://toppng.com/uploads/preview/instagram-default-profile-picture-11562973083brycehrmyv.png" Height="150" width="auto"-->
                 <div><span th:text="'Namn: '+${per.firstName}">Namn</span></div>
                 <div><span th:text="'Ort: '+${per.location}">Location</span></div>
                 <div><span th:text="'Rating: '+${per.rating}">Betyg</span></div>
