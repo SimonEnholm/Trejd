@@ -4,7 +4,7 @@ var long = document.getElementById("longitude");
 let setLoc = document.getElementById("setLoc");
 let getLoc = document.getElementById("getLoc");
 
-function getLocation() {
+async function getLocation() {
     disableButtons();
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
@@ -16,7 +16,7 @@ function getLocation() {
 
 async function showPosition(position) {
 
-   let response = await fetch('https://geocode.xyz/'+position.coords.latitude+','+position.coords.longitude+'?json=1&auth=118676552131904169980x39799')
+   let response = await fetch('https://geocode.xyz/'+position.coords.latitude+','+position.coords.longitude+'?json=1&auth=710301539225159493852x18050')
    let theData = await response.json();
    lat.value =  position.coords.latitude;
    long.value = position.coords.longitude;
@@ -26,7 +26,7 @@ async function showPosition(position) {
 
 async function setLocation(){
     disableButtons();
-    let response = await fetch('https://geocode.xyz/'+x.value+'?json=1&auth=118676552131904169980x39799');
+    let response = await fetch('https://geocode.xyz/'+x.value+'?json=1&auth=1710301539225159493852x18050');
     let responseCode = await response.status;
     if(responseCode==200){
         let theData = await response.json();
