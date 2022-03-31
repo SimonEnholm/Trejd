@@ -53,6 +53,11 @@ color:black;
 font-family: 'Caveat', cursive;
 }
 
+.text-custom_white {
+                  color:white;
+                  font-family: 'Caveat', cursive;
+                  }
+
 .btn-custom{
 color:#F40F5F;
 
