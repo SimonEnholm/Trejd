@@ -303,7 +303,7 @@ public class TrejdService {
     }
 
     public List<OrderTrejd> findAllOrdersSortedAndFiltered(User user, Long skillId) {
-        List <OrderTrejd> orders = orderRepo.findAllBySkillId(skillId);
+        List <OrderTrejd> orders = orderRepo.findAllBySkillId(skillId, user.getId());
 
         return bubbleSortOrder(user, orders);
     }
