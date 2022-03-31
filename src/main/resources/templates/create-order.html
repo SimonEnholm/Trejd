@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
   <link rel="stylesheet" href="/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,10 +32,10 @@
     <div class="collapse navbar-collapse" id="navmenu">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item ">
-          <a href="#home" class="nav-link"> <span class="text-custom">SÅ FUNKAR DET </span> </a>
+          <a href="/info" class="nav-link"> <span class="text-custom">SÅ FUNKAR DET </span> </a>
         </li>
         <li class="nav-item">
-          <a href="#trejd" class="nav-link"><span class="text-custom">TJÄNSTER </span> </a>
+          <a href="/orders" class="nav-link"><span class="text-custom">TJÄNSTER </span> </a>
         </li>
         <li class="nav-item" >
           <a href="#offerlist" class="nav-link"><span class="text-custom">LOGGA IN </span></a>
@@ -43,7 +44,7 @@
     </div>
     </div>
 </nav>
-
+<section>
 <h1 class ="text-center"> Create Order</h1>
 </div>
 <div th:if="${performer}!=null">
@@ -54,14 +55,14 @@
 </div>
 <p th:text="${session.firstname}">inloggad firstname</p>
 
-  <form action="/create-order" method="POST" th:object="${order}">
+  <form action="" method="POST" th:object="${order}">
 <!-**************************** IF PARAMETRAR ******************************************** ->
     <div th:if="${performer}!=null" class="text-custom text-center performer-info " style="color:white !important">
       <h1>Performer info</h1>
         <h4>Skill: <span th:text="${order.getSkill().getSkillName}"></span></h4>
         <p>Name: <span th:text="${performer.getFirstName} + ' ' + ${performer.getLastName}"></span></p>
 
-      <p> Last name: <span th:text="${performer.getLastName}" ></span></p>
+     <!-- <p> Last name: <span th:text="${performer.getLastName}" ></span></p> -->
       <p>Location :<span th:text="${performer.getLocation}"></span></p>
       <p>Balance: <span th:text="${performer.getBalance}"></span></p>
       <p>Rating: <span th:text="${performer.getRating}"></span></p>
@@ -69,11 +70,13 @@
     </div>
     <!-*******************************IF NO PARAMTERAR ********************************************** ->
     <div th:if="${performer}==null" class="text-custom text-center">
-    <select th:field="*{skillId}" class="form-select text-custom text-center ">
-      <option value="0" selected="selected">Choose skill</option>
-      <option th:each="skill: ${skills}"  th:value="${skill.id}" th:text="${skill.skillName}"></select>
-
-    <textarea name="description" class="form-control text-center" id="exampleFormControlTextarea1" rows="3" th:field="*{description}" placeholder="Describe your need..."></textarea>
+        <select th:field="*{skillId}" class="form-select" onchange="displayNewDropdown(1)">
+            <option value="0" selected="selected">Välj skill</option>
+            <optgroup th:each="cat : ${skills}"  th:label="${cat.key}">
+                <option th:each="skill : ${cat.value}"  th:value="${skill.id}" th:text="${skill.skillName}">
+                </option>
+        </select>
+        <textarea name="description" class="form-control text-center" id="exampleFormControlTextarea1" rows="3" th:field="*{description}" placeholder="Describe your need..."></textarea>
     </div>
     <!-************************************  KÖRS ALLTID  ****************************************** ->
     <div class="text-custom text-center" >
@@ -83,8 +86,8 @@
     <input type = "hidden" th:field="*{latitude}" id="latitude">
     <input type = "hidden" th:field="*{longitude}" id="longitude">
     <div class="text-custom text-center">
-    <input type="button" onclick="getLocation()" value="Get your location" class="btn btn-secondary mb-3 text-center"></input>
-    <input type="button" onclick="setLocation()" value="Set your location" class="btn btn-secondary mb-3 text-center"></input>
+        <input type="button" onclick="getLocation()" value="Get your location" class="btn btn-secondary mb-3 text-center" id="getLoc"/>
+        <input type="button" onclick="setLocation()" value="Set your location" class="btn btn-secondary mb-3 text-center" id="setLoc"/>
     </div>
     <!-******************************************************************************** ->
     <div class="col-auto">
@@ -92,14 +95,22 @@
     <div class="col-auto text-center text-custom">
       <button type="submit" class="btn btn-primary mb-3">Confirm</button>
     </div>
+        <!--
+        <div class="col-auto text-center text-custom">
+            <span onclick="history.back()" class="btn btn-secondary mb-3">Back</span>
+        </div>
+        -->
     </div>
 </form>
-
+    <div class="col-auto text-center text-custom">
+        <span onclick="history.back()" class="btn btn-secondary mb-3">Back</span>
+    </div>
+</section>
 <div class="col-auto text-center text-custom">
 
 <!--button onclick="getLocation()"class="btn btn-secondary mb-3 text-center ">Get your location</button>
 <button onclick="setLocation()"class="btn btn-secondary mb-3 text-center">Set your location</button-->
-<script src="/geoScript.js"></script>
+
 </div>
 
 <footer class="p-5 navbar-custom text-white text-center position-relative">
@@ -110,7 +121,6 @@
     </a>
   </div>
 </footer>
-
-
+<script src="/geoScript.js"></script>
 </body>
 </html>

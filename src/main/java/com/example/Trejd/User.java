@@ -13,7 +13,12 @@ public class User {
     @OneToMany (mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserSkills> userSkills;
     @Transient
-    private Long skillId;
+    private Long skillId1;
+    @Transient
+    private Long skillId2;
+    @Transient
+    private Long skillId3;
+
     private String firstName;
     private String lastName;
     private String email;
@@ -43,17 +48,31 @@ public class User {
      this.email = email;
      this.password = password;
  }
+    public Long getSkillId1() {
+        return skillId1;
+    }
+    public void setSkillId1(Long skillId1) {
+        this.skillId1 = skillId1;
+    }
+
+    public Long getSkillId2() {
+        return skillId2;
+    }
+
+    public void setSkillId2(Long skillId2) {
+        this.skillId2 = skillId2;
+    }
+
+    public Long getSkillId3() {
+        return skillId3;
+    }
+
+    public void setSkillId3(Long skillId3) {
+        this.skillId3 = skillId3;
+    }
 
     public double getLatitude() {
         return latitude;
-    }
-
-    public Long getSkillId() {
-        return skillId;
-    }
-
-    public void setSkillId(Long skillId) {
-        this.skillId = skillId;
     }
 
     public void setLatitude(double latitude) {

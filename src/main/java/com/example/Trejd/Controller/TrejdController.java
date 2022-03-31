@@ -8,6 +8,7 @@ import com.example.Trejd.Service.TrejdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
@@ -15,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -25,9 +27,34 @@ public class TrejdController {
     TrejdService service;
 
     @GetMapping("/")
-    public String showStartPage() {
+    public String showStartPage(Model model) {
+        User user = new User();
+        model.addAttribute("user",user);
+        return "home";
+    }
+    @PostMapping("/")
+    public String checkLogin(@ModelAttribute User user, HttpSession session, BindingResult result) {
 
+        ValidationUtils.rejectIfEmpty(result,"email","Email cant be empty");
+        ValidationUtils.rejectIfEmpty(result,"password","Password cant be empty");
 
+        if(result.hasErrors()){
+            return "home";
+        }
+        User loggedInUser = service.getUser(user.getEmail(),user.getPassword());
+        if (loggedInUser != null) {
+            session.setAttribute("user", loggedInUser);
+            return "my-page";
+        } else {
+            //TODO: Print on page.
+            System.out.println("No such user!");
+            return "home";
+        }
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
         return "home";
     }
 
@@ -67,12 +94,13 @@ public class TrejdController {
 //  }
 
     // todo fetmarkering på skillen vi valde.
+    // todo Review utkommenterat???
   @GetMapping("/maketrejd/{id}/{skillId}")
     public String makeTrejdPage(Model model, @PathVariable Long id, @PathVariable Long skillId) {
       User user = service.getUserById(id);
-      List<Review> reviews = service.getReviewsOnUser(user);
+      //List<Review> reviews = service.getReviewsOnUser(user);
       model.addAttribute("user", user);
-      model.addAttribute("reviews", reviews);
+      //model.addAttribute("reviews", reviews);
       Skill skill = service.getSkillById(skillId);
       model.addAttribute("selectedSkill",skill);
 //    public String trejdProfilePage(Model model, @PathVariable Long id) {
@@ -98,20 +126,7 @@ public class TrejdController {
 //      return "tack";
 //  }
 
-    @PostMapping("/")
-    public String checkLogin(@RequestParam String email, @RequestParam String password,HttpSession session) {
-        System.out.println("TeSTARRR");
-        User user = service.getUser(email, password);
 
-        if (user != null) {
-            System.out.println("test");
-            session.setAttribute("user", user);
-            return "my-page";
-        } else {
-            System.out.println("No such user!");
-            return "home";
-        }
-    }
 
     //-- Here we also need the postmapping for create user click on the button should send us to create new user page -->
 
@@ -134,11 +149,6 @@ public class TrejdController {
 
 //        return "home";
 //    }
-
-    @GetMapping("/login")
-    public String getLoginPage2() {
-        return "login";
-    }
 
 //    @PostMapping("/login")
 //    public String checkLogin(@RequestParam String email, @RequestParam String password, HttpSession session) {
@@ -164,6 +174,7 @@ public class TrejdController {
     @GetMapping("/my-page")
     public String getMyPage(HttpSession session) {
       User user = (User)session.getAttribute("user");
+        session.setAttribute("user",user);
       // if no user restrict view.
         return "my-page";
     }
@@ -275,32 +286,60 @@ public class TrejdController {
         User user = (User) session.getAttribute("user");
         model.addAttribute("isFiltered",true);
         model.addAttribute("skillId",skillId);
-        model.addAttribute("users", service.findAllUsersSortedAndFiltered(user,true,skillId));
+        model.addAttribute("performers", service.findAllUsersSortedAndFiltered(user,true,skillId));
         return "viewPerformers";
     }
 
     @GetMapping("/create-user")
     public String viewUserPage(Model model){
         User user = new User();
-        List<Skill> skills = service.getAllSkills();
-        model.addAttribute("skills",skills);
+        Map<String,List<Skill>> skillsAndCat = service.getAllSkillsAndCategories();
+        model.addAttribute("skills",skillsAndCat);
         model.addAttribute("user",user);
         return "create-user";
     }
 
     @PostMapping("/create-user")
-    public String createUserPage(@ModelAttribute User user, Model model,HttpSession session){
+    public String createUserPage(@ModelAttribute User user, Model model,HttpSession session,BindingResult result){
+        //Validation
+        ValidationUtils.rejectIfEmpty(result,"firstName","First name cant be empty");
+        ValidationUtils.rejectIfEmpty(result,"lastName","Last name cant be empty");
+        ValidationUtils.rejectIfEmpty(result,"email","Email cant be empty");
+        ValidationUtils.rejectIfEmpty(result,"password","Password cant be empty");
+        ValidationUtils.rejectIfEmpty(result,"location","Location cant be empty");
+        ValidationUtils.rejectIfEmpty(result,"skillId1","Skill cant be empty");
 
+        if(result.hasErrors()){
+            return "redirect:/create-user";
+        }
         if(!service.saveUser(user)){
             System.out.println("User already exist!");
             return "create-user";
         }
-        Skill skill = service.getSkillById(user.getSkillId());
+
+        Skill skill = service.getSkillById(user.getSkillId1());
+        Skill skill2 = service.getSkillById(user.getSkillId2());
+        Skill skill3 = service.getSkillById(user.getSkillId3());
         UserSkills us = new UserSkills();
         us.setSkill(skill);
         us.setUser(user);
         service.saveUserSkill(us);
+        UserSkills us2 = new UserSkills();
+        UserSkills us3 = new UserSkills();
+
+
+        if(user.getSkillId2()!=null) {
+            us2.setSkill(skill2);
+            us2.setUser(user);
+            service.saveUserSkill(us2);
+        }
+        if(user.getSkillId2()!=null) {
+            us3.setSkill(skill3);
+            us3.setUser(user);
+            service.saveUserSkill(us3);
+        }
         session.setAttribute("user",user);
+
         return "my-page";
     }
 
@@ -308,15 +347,11 @@ public class TrejdController {
     @GetMapping({"/create-order", "/create-order/{performerId}/{skillId}"})
     public String createOrder(@PathVariable(required = false) Long performerId,
                               @PathVariable (required = false) Long skillId, HttpSession session, Model model){
-
+        System.out.println("NU");
         OrderTrejd order = new OrderTrejd();
-        //User user = (User) session.getAttribute("user");
 
-//        if(order.getSkillId()==0){
-//            return "create-order";
-//        }
-        List<Skill> skills = service.getAllSkills();
-        model.addAttribute("skills", skills);
+        Map<String,List<Skill>> skillsAndCat = service.getAllSkillsAndCategories();
+        model.addAttribute("skills",skillsAndCat);
 
         if(performerId != null){
             System.out.println("Performer not null");
@@ -329,32 +364,54 @@ public class TrejdController {
             return "create-order";
         }
         model.addAttribute("order", order);
-        System.out.println(" null");
         return "create-order";
     }
 
     // todo länkas vart?
-    @PostMapping("/create-order")
-    public String saveOrder(@ModelAttribute OrderTrejd order,@RequestParam(required = false) Long performerId, HttpSession session) {
+    @PostMapping({"/create-order","/create-order/{performerId}/{skillId}"})
+    public String saveOrder(@ModelAttribute OrderTrejd order, HttpSession session,
+                            @PathVariable(required = false) Long performerId, @PathVariable (required = false) Long skillId, Model model) {
         //Nice to have: If performer exists sen mail to performer and set order to pending.
-        order.setUser( (User) session.getAttribute("user"));
+        String goTo = "order-confirm";
+        User user = (User) session.getAttribute("user");
+        System.out.println(user.getFirstName());
+        order.setUser(user);
         Skill skill = service.getSkillById(order.getSkillId());
         order.setSkill(skill);
-        service.saveOrder(order);
-
+        Trejd trejd = new Trejd();
+        trejd.setOrderTrejd(order);
+        trejd.setCompleted(false);
         if(performerId!=null){
-            Trejd trejd = new Trejd();
-            trejd.setOrderTrejd(order);
-            trejd.setCompleted(false);
             trejd.setPerformer(service.getUserById(performerId));
+            model.addAttribute("trejd", trejd);
+            goTo = "trejd-confirm";
         }
-        return "trejdInfo";
+        service.saveOrder(order);
+        service.saveTrejd(trejd);
+        return goTo;
     }
 
+    @GetMapping("/trejd-confirm")
+    public String trejdConfirm(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        Trejd trejd = service.getLastTrejd();
+        model.addAttribute("trejd", trejd);
+        return "trejd-confirm";
+    }
 
-
-
-
+    @GetMapping("/updateuserinfo")
+    public String showUserInfo (HttpSession session, Model model){
+        User user = (User)session.getAttribute("user");
+        model.addAttribute("user",user);
+        return "updateuserinfo";
+    }
+    @PostMapping("/updateuserinfo")
+    public String updateUserInfo (@ModelAttribute User user, HttpSession session){
+        //service.updateUser(user.getFirstName(),user.getLastName(),user.getEmail(),user.getPassword(), user.getId());
+        service.saveUser(user);
+        session.setAttribute("user",user);
+        return "my-page";
+    }
 
 
 }
