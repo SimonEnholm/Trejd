@@ -125,7 +125,7 @@ public class TrejdService {
     }
 
     public User getUser(String email, String password) {
-        System.out.println("restar testar");
+
        return userRepo.getUserByEmailAndPassword(email,password);
 
 //        System.out.println("testar testar");
@@ -265,6 +265,7 @@ public class TrejdService {
     }
 
     public void saveOrder(OrderTrejd order) {
+
         orderRepo.save(order);
     }
     public OrderTrejd getOrder(Long id) {
