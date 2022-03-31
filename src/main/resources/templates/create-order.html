@@ -53,7 +53,7 @@
 </div>
 <p th:text="${session.firstname}">inloggad firstname</p>
 
-  <form action="/create-order" method="POST" th:object="${order}">
+  <form action="" method="POST" th:object="${order}">
 <!-**************************** IF PARAMETRAR ******************************************** ->
     <div th:if="${performer}!=null" class="text-custom text-center performer-info " style="color:white !important">
       <h1>Performer info</h1>
@@ -68,11 +68,13 @@
     </div>
     <!-*******************************IF NO PARAMTERAR ********************************************** ->
     <div th:if="${performer}==null" class="text-custom text-center">
-    <select th:field="*{skillId}" class="form-select text-custom text-center ">
-      <option value="0" selected="selected">Choose skill</option>
-      <option th:each="skill: ${skills}"  th:value="${skill.id}" th:text="${skill.skillName}"></select>
-
-    <textarea name="description" class="form-control text-center" id="exampleFormControlTextarea1" rows="3" th:field="*{description}" placeholder="Describe your need..."></textarea>
+        <select th:field="*{skillId}" class="form-select" onchange="displayNewDropdown(1)">
+            <option value="0" selected="selected">Välj skill</option>
+            <optgroup th:each="cat : ${skills}"  th:label="${cat.key}">
+                <option th:each="skill : ${cat.value}"  th:value="${skill.id}" th:text="${skill.skillName}">
+                </option>
+        </select>
+        <textarea name="description" class="form-control text-center" id="exampleFormControlTextarea1" rows="3" th:field="*{description}" placeholder="Describe your need..."></textarea>
     </div>
     <!-************************************  KÖRS ALLTID  ****************************************** ->
     <div class="text-custom text-center" >
@@ -82,8 +84,8 @@
     <input type = "hidden" th:field="*{latitude}" id="latitude">
     <input type = "hidden" th:field="*{longitude}" id="longitude">
     <div class="text-custom text-center">
-    <input type="button" onclick="getLocation()" value="Get your location" class="btn btn-secondary mb-3 text-center"></input>
-    <input type="button" onclick="setLocation()" value="Set your location" class="btn btn-secondary mb-3 text-center"></input>
+        <input type="button" onclick="getLocation()" value="Get your location" class="btn btn-secondary mb-3 text-center" id="getLoc"/>
+        <input type="button" onclick="setLocation()" value="Set your location" class="btn btn-secondary mb-3 text-center" id="setLoc"/>
     </div>
     <!-******************************************************************************** ->
     <div class="col-auto">
@@ -101,7 +103,7 @@
 
 <!--button onclick="getLocation()"class="btn btn-secondary mb-3 text-center ">Get your location</button>
 <button onclick="setLocation()"class="btn btn-secondary mb-3 text-center">Set your location</button-->
-<script src="/geoScript.js"></script>
+
 </div>
 
 <footer class="p-5 navbar-custom text-white text-center position-relative">
@@ -112,7 +114,6 @@
     </a>
   </div>
 </footer>
-
-
+<script src="/geoScript.js"></script>
 </body>
 </html>

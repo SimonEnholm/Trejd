@@ -11,7 +11,10 @@ import com.example.Trejd.Repositories.UserRepository;
 import com.example.Trejd.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -102,8 +105,6 @@ public class TrejdService {
         } else {
             return false;
         }
-
-
     }
 
     public void createOrder(OrderTrejd orderTrejd) {
@@ -123,7 +124,7 @@ public class TrejdService {
     }
 
     public User getUser(String email, String password) {
-        System.out.println("restar testar");
+
        return userRepo.getUserByEmailAndPassword(email,password);
 
 //        System.out.println("testar testar");
@@ -192,6 +193,16 @@ public class TrejdService {
         return (List<Skill>) skillRepo.findAll();
     }
 
+    public Map<String, List<Skill>> getAllSkillsAndCategories() {
+        Map<String, List<Skill>> skillsAndCat = new HashMap<>();
+        List<Category> categories = (List<Category>) categoryRepo.findAll();
+
+        for(Category category : categories){
+            skillsAndCat.put(category.getCategoryName(),skillRepo.findAllByCategoryId(category.getId()));
+        }
+        return skillsAndCat;
+    }
+
     public List<OfferTrejd> getOffersJoinUserJoinSkill() {
         // overkill? kommer man åt user-firstname via findAll?
         return offerRepo.getOffersJoinUserJoinSkill();
@@ -253,6 +264,7 @@ public class TrejdService {
     }
 
     public void saveOrder(OrderTrejd order) {
+
         orderRepo.save(order);
     }
     public OrderTrejd getOrder(Long id) {
