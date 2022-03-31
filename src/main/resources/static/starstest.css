@@ -5,18 +5,6 @@ background-color: #F40F5F !important;
 
 }
 
-.bg-custom{
-background-color: #1A9DA3 !important;
-  color: #F40F5F;
-  font-family: 'Caveat', cursive;
-}
-
-.error{
-margin-left:20px;
-color:black;
-}
-
-
 .navbar-custom {
   padding: 60px;
   text-align: center;
@@ -78,35 +66,44 @@ width 50px;
 
 }
 
+<!-- STYLE.CSS -->
 
+body {
+    background-color: darkgray;
+    margin:20px;
+}
 
+body,
+.movie input,
+.movie button{
+    font-size: 20px;
+    line-height: 30px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
 
+.movie {
+    padding:30px;
+    background-color: white;
+    display: inline-block;
+}
 
+.movie .poster {
+    width: 501px;
+}
 
+.movie .rating {
+    display: flex;
+    justify-content: center;
+}
 
+.movie .rating img {
+    height:30px;
+    cursor:pointer;
+    padding:0 5px;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.movie .result {
+    text-align: center;
+    padding-top:30px;
+    cursor: pointer;
+}
