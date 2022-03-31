@@ -244,6 +244,9 @@ public class TrejdService {
         List<User> users;
         if(sortByDistance){
             users = bubbleSortUser(user,(List<User>) userRepo.findAllByQuery(user.getId()));
+            for (int i = 0; i < users.size(); i++) {
+                System.out.println(users.get(i).getFirstName());
+            }
         }
         else{
             //sortByRating
@@ -252,7 +255,7 @@ public class TrejdService {
         return users;
     }
     public List<User> findAllUsersSortedAndFiltered(User user, Boolean sortByDistance, Long skillId) {
-        List<User> users = userRepo.findAllBySkillId(skillId);
+        List<User> users = userRepo.findAllBySkillId(skillId , user.getId());
 
         if(sortByDistance){
             users = bubbleSortUser(user, users);
