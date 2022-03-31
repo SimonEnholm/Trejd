@@ -49,24 +49,25 @@
     </select>
       </div>
       <div>
-    <button type="submit" class="btn btn-secondary mb-5 mt-3 text-center">Filter</button>
+    <button type="submit" class="btn btn-primary mb-5 mt-3 text-center">Filtrera</button>
         </div>
 </form>
 
 
 
-<div th:each="order: ${wishes}"  th:value="${order.user.firstName}">
+<div th:each="order: ${wishes}"  th:value="${order.user.firstName}" class="text-custom text-center">
     <a th:if="${isFiltered}==true" th:href="'/maketrejd/' + ${order.user.id} + '/' + ${skillId}" >
         <div class="border">
             <img src="https://toppng.com/uploads/preview/instagram-default-profile-picture-11562973083brycehrmyv.png" Height="150" width="auto">
-            <span th:text="${order.user.firstName}">NAME</span>
-            <span th:text="${order.description}">DESCRIPTION</span>
+          <div class="text-custom text-center"><h4><span th:text="${order.user.firstName}">NAME</span></h4></div>
+            <div class="text-custom text-center mt-2"><span th:text="${order.description}">DESCRIPTION</span> </div>
+
         </div></a>
 </div>
 
 
 
-<footer class="p-5 navbar-custom text-white text-center position-relative">
+<footer class=" mt-5 p-5 navbar-custom text-white text-center position-relative">
     <div class="container">
         <p class="lead"> Copyright &copy; 2022 Trejd</p>
         <a href="#" class="position-absolute bottom-0 end-0 p-5">

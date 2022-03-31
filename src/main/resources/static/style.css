@@ -31,10 +31,15 @@ color:black;
 
 }
 
-.text-custom{
+.text-custom {
 color:#F40F5F;
 font-family: 'Caveat', cursive;
 }
+.text-custom a{
+    text-decoration: none!important;
+    -webkit-box-shadow: none!important;
+    box-shadow: none!important;}
+
 
 .btn-custom{
 color:#F40F5F;

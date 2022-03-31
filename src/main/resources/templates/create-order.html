@@ -67,7 +67,7 @@
     </div>
     <!-*******************************IF NO PARAMTERAR ********************************************** ->
     <div th:if="${performer}==null" class="text-custom text-center">
-        <select th:field="*{skillId}" class="form-select" onchange="displayNewDropdown(1)">
+        <select th:field="*{skillId}" class="form-select text-center" onchange="displayNewDropdown(1)">
             <option value="0" selected="selected">Välj skill</option>
             <optgroup th:each="cat : ${skills}"  th:label="${cat.key}">
                 <option th:each="skill : ${cat.value}"  th:value="${skill.id}" th:text="${skill.skillName}">
