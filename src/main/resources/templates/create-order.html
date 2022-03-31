@@ -40,6 +40,7 @@
     </div>
     </div>
 </nav>
+
 <section>
 <h1 class ="text-center"> Skapa Order</h1>
 </div>
@@ -72,27 +73,27 @@
                 <option th:each="skill : ${cat.value}"  th:value="${skill.id}" th:text="${skill.skillName}">
                 </option>
         </select>
-        <textarea name="description" class="form-control text-center" id="exampleFormControlTextarea1" rows="3" th:field="*{description}" placeholder="Describe your need..."></textarea>
+        <textarea name="description" class="form-control text-center" id="exampleFormControlTextarea1" rows="3" th:field="*{description}" placeholder="Beskriv vad du behöver hjälp med..."></textarea>
     </div>
     <!-************************************  KÖRS ALLTID  ****************************************** ->
 
     <div class="text-custom text-center" >
         <label for="FormInput6" class="form-label">Hur lång tid estimerar du att tjänsten kommer ta?</label>
-        <input type="number" min="0" value="50" th:field="*{estimatedTime}" class="form-control text-custom text-center" id="FormInput6" placeholder="Type in estimated time" th:onchange="'checkUnderBalance('+${order.user.balance}+')'"><br>
-    <label for="FormInput5" class="form-label">Skriv in, eller hämta din position: </label>
-    <input type="text" th:field="*{location}" class="form-control text-custom text-center" id="FormInput5" placeholder="Type in or get your location"><br>
+        <input type="number" min="0" value="50" th:field="*{estimatedTime}" class="form-control text-custom text-center" id="FormInput6" placeholder="Beräknad tid att utföra" th:onchange="'checkUnderBalance('+${order.user.balance}+')'"><br>
+    <label for="FormInput5" class="form-label">Skriv in eller hämta din plats: </label>
+    <input type="text" th:field="*{location}" class="form-control text-custom text-center" id="FormInput5" placeholder="Skriv din plats"><br>
     </div>
     <input type = "hidden" th:field="*{latitude}" id="latitude">
     <input type = "hidden" th:field="*{longitude}" id="longitude">
     <div class="text-custom text-center">
-        <input type="button" onclick="getLocation()" value="Get your location" class="btn btn-secondary mb-3 text-center" id="getLoc"/>
-        <input type="button" onclick="setLocation()" value="Set your location" class="btn btn-secondary mb-3 text-center" id="setLoc"/>
+        <input type="button" onclick="getLocation()" value="Hämta Plats" class="btn btn-secondary mb-3 text-center" id="getLoc"/>
+        <input type="button" onclick="setLocation()" value="Ange Plats" class="btn btn-secondary mb-3 text-center" id="setLoc"/>
     </div>
     <!-******************************************************************************** ->
     <div class="col-auto">
 
     <div class="col-auto text-center text-custom">
-      <button type="submit" class="btn btn-primary mb-3">Confirm</button>
+      <button type="submit" class="btn btn-primary mb-3">Bekräfta</button>
     </div>
         <!--
         <div class="col-auto text-center text-custom">
@@ -102,9 +103,10 @@
     </div>
 </form>
     <div class="col-auto text-center text-custom">
-        <span onclick="history.back()" class="btn btn-secondary mb-3">Back</span>
+        <span onclick="history.back()" class="btn btn-secondary mb-3">Tillbaka</span>
     </div>
 </section>
+
 <div class="col-auto text-center text-custom">
 
 <!--button onclick="getLocation()"class="btn btn-secondary mb-3 text-center ">Get your location</button>

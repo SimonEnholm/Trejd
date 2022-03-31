@@ -44,20 +44,20 @@
 <div class="container text-custom mt-5">
 <form action="" method="post" class="mb-3" th:object="${user}">
     <label for="FormInput1" class="form-label">Förnamn</label>
-    <input type="text" th:field="*{firstName}" class="form-control" id="FormInput1" placeholder="First Name">
+    <input type="text" th:field="*{firstName}" class="form-control" id="FormInput1" placeholder="Förnamn">
     <input type="hidden"  th:field="*{id}" >
     <label for="FormInput2" class="form-label">Efter namn</label>
-    <input type="text" th:field="*{lastName}" class="form-control" id="FormInput2" placeholder="Last name">
+    <input type="text" th:field="*{lastName}" class="form-control" id="FormInput2" placeholder="Efternamn">
 
     <label for="FormInput3" class="form-label">E-post adress</label>
-    <input type="email" th:field="*{email}" class="form-control" id="FormInput3" placeholder="name@example.com">
+    <input type="email" th:field="*{email}" class="form-control" id="FormInput3" placeholder="namn@exampel.com">
 
     <input type = "hidden" th:field="*{password}" >
    <!-- <label for="FormInput4" class="form-label">Lösenord</label>
     <input type="password" th:field="*{password}" class="form-control" id="FormInput4" placeholder="password"> -->
 
-    <label for="FormInput5" class="form-label">Location</label>
-    <input type="text" th:field="*{location}" class="form-control" id="FormInput5" placeholder="Get or type your location"><br>
+    <label for="FormInput5" class="form-label">Plats</label>
+    <input type="text" th:field="*{location}" class="form-control" id="FormInput5" placeholder="Hämta eller skriv din plats"><br>
 
     <input type = "hidden" th:field="*{latitude}" id="latitude">
     <input type = "hidden" th:field="*{longitude}" id="longitude">
@@ -81,11 +81,11 @@
     </datalist>
 </div-->
     <div class="col-auto">
-        <button type="submit" class="btn btn-primary mb-3">Update My Info</button>
+        <button type="submit" class="btn btn-primary mb-3">Updatera Min Info</button>
     </div>
 </form>
     <div class="col-auto text-center text-custom">
-        <span onclick="history.back()" class="btn btn-secondary mb-3">Back</span>
+        <span onclick="history.back()" class="btn btn-secondary mb-3">Tillbaka</span>
     </div>
 </div>
 

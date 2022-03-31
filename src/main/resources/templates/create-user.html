@@ -46,34 +46,34 @@
 <div class="container text-custom mt-5">
     <form action="" method="post" class="mb-3" th:object="${user}">
     <label for="FormInput1" class="form-label">Förnamn</label><span class="error" th:if="${#fields.hasErrors('firstName')}">Field can't be empty</span>
-    <input type="text" th:field="*{firstName}" class="form-control" id="FormInput1" placeholder="First Name">
+    <input type="text" th:field="*{firstName}" class="form-control" id="FormInput1" placeholder="Förnamn">
 
     <label for="FormInput2" class="form-label">Efter namn</label><span class="error" th:if="${#fields.hasErrors('lastName')}">Field can't be empty</span>
-    <input type="text" th:field="*{lastName}" class="form-control" id="FormInput2" placeholder="Last name">
+    <input type="text" th:field="*{lastName}" class="form-control" id="FormInput2" placeholder="Efternamn">
 
     <label for="FormInput3" class="form-label">E-post adress</label><span class="error" th:if="${#fields.hasErrors('email')}">Field can't be empty</span>
-    <input type="email" th:field="*{email}" class="form-control" id="FormInput3" placeholder="name@example.com">
+    <input type="email" th:field="*{email}" class="form-control" id="FormInput3" placeholder="namn@exampel.com">
 
     <label for="FormInput4" class="form-label">Lösenord</label><span class="error" th:if="${#fields.hasErrors('password')}">Field can't be empty</span>
-    <input type="password" th:field="*{password}" class="form-control" id="FormInput4" placeholder="password">
+    <input type="password" th:field="*{password}" class="form-control" id="FormInput4" placeholder="lösenord">
 
         <label for="FormInput6" class="form-label">Bild</label><span class="error" th:if="${#fields.hasErrors('image')}">Field can't be empty</span>
         <input type="file" th:field="*{image}" accept="image/*" class="form-control" id="FormInput6" placeholder="Bild">
 
 
         <label for="FormInput5" class="form-label">Location</label><span class="error" th:if="${#fields.hasErrors('location')}">Field can't be empty</span>
-    <input type="text" th:field="*{location}" class="form-control" id="FormInput5" placeholder="Get or type your location"><br>
+    <input type="text" th:field="*{location}" class="form-control" id="FormInput5" placeholder="Hämta eller skriv din location"><br>
 
     <input type = "hidden" th:field="*{latitude}" id="latitude">
     <input type = "hidden" th:field="*{longitude}" id="longitude">
     <div class="mb-3">
-        <input type="button" class="btn btn-secondary" onclick="getLocation()" value="Get your location" id="getLoc"/>
-        <input type="button" class="btn btn-secondary" onclick="setLocation()" value="Set your location" id="setLoc"/>
+        <input type="button" class="btn btn-secondary" onclick="getLocation()" value="Getta din location" id="getLoc"/>
+        <input type="button" class="btn btn-secondary" onclick="setLocation()" value="Setta din location" id="setLoc"/>
     </div>
 
         <div class="mb-2">
             <h3>Välj upp till 3 skills</h3>
-            <label class="form-label">Skill</label><span class="error" th:if="${#fields.hasErrors('skillId1')}">Field can't be empty</span>
+            <label class="form-label">Skill</label><span class="error" th:if="${#fields.hasErrors('skillId1')}">Får inte lämnas tom</span>
             <select th:field="*{skillId1}" class="form-select" onchange="displayNewDropdown(1)">
                 <option value="0" selected="selected">Välj skill</option>
                 <optgroup th:each="cat : ${skills}"  th:label="${cat.key}">
@@ -101,11 +101,11 @@
         </div>
 
     <div class="col-auto" id="buttonCreateUser">
-        <button type="submit" class="btn btn-primary mb-3">Confirm</button>
+        <button type="submit" class="btn btn-primary mb-3">Bekräfta</button>
     </div>
 </form>
     <div class="col-auto text-center text-custom">
-        <span onclick="history.back()" class="btn btn-secondary mb-3">Back</span>
+        <span onclick="history.back()" class="btn btn-secondary mb-3">Tillbaka</span>
     </div>
 </div>
 
