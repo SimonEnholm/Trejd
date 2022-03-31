@@ -369,9 +369,9 @@ public class TrejdController {
     // todo länkas vart?
     @PostMapping({"/create-order","/create-order/{performerId}/{skillId}"})
     public String saveOrder(@ModelAttribute OrderTrejd order, HttpSession session,
-                            @PathVariable(required = false) Long performerId, @PathVariable (required = false) Long skillId) {
+                            @PathVariable(required = false) Long performerId, @PathVariable (required = false) Long skillId, Model model) {
         //Nice to have: If performer exists sen mail to performer and set order to pending.
-
+        String goTo = "order-confirm";
         User user = (User) session.getAttribute("user");
         System.out.println(user.getFirstName());
         order.setUser(user);
@@ -382,10 +382,12 @@ public class TrejdController {
         trejd.setCompleted(false);
         if(performerId!=null){
             trejd.setPerformer(service.getUserById(performerId));
+            model.addAttribute("trejd", trejd);
+            goTo = "trejd-confirm";
         }
         service.saveOrder(order);
         service.saveTrejd(trejd);
-        return "order-confirm";
+        return goTo;
     }
 
     @GetMapping("/trejd-confirm")
