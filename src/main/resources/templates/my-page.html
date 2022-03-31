@@ -42,15 +42,9 @@
 </nav>
 <div class="text-center">
 <h1 th:text="'Välkommen ' + ${session.user.firstName} + '!'" class ="text-center"> </h1>
-<button type="button" class="btn text-custom mb-3" style="color:#F40F5F;" >Saldo: 00h 00min </button>
+<span th:text="'Saldo: ' + ${session.user.balance} + 'h'" class="btn text-custom mb-3" style="color:#F40F5F;" >Saldo: 00h 00min </span>
 </div>
 </div>
-
-<div>
-    <img src="icon_my_page.JPG"
-         style="height:150px" class="center">
-
-
 
 <div th:if="${session.user.getImage!=null}">
     <img th:src="'/images/'+${session.user.getImage}" style="height:150px" class="user-image center">
@@ -97,7 +91,7 @@
             </a>
         </div>
         <div class="col-auto text-center text-custom">
-            <a href="/logout" class="btn btn-secondary mb-3">Logga ut</a>
+            <a href="/" class="btn btn-secondary mb-3">Logga ut</a>
         </div>
     </section>
 </div>

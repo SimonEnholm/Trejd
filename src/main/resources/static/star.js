@@ -11,7 +11,7 @@ function leftStar() {
 }
 
 function clickStar(number) {
-    result.innerText = `Du gav Trejden ${number} stjärnor!`
+
     chosenStars = number;
     document.getElementById("rating").value = number;
 }
