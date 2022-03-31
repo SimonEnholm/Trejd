@@ -29,7 +29,7 @@
                     <a href="/orders" class="nav-link"><span class="text-custom">TJÄNSTER </span> </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/" class="nav-link"><span class="text-custom">LOGGA IN </span></a>
+                    <a href="/logout" class="nav-link"><span class="text-custom">LOGGA UT </span></a>
                 </li>
             </ul>
         </div>
@@ -54,20 +54,21 @@
         <button type="submit" class="btn btn-primary mb-6 mt-2">Filtrera</button>
         </div>
     </form>
-        <div th:each="user: ${users}"  th:value="${user.firstName}" class="text-custom text-center">
-            <a th:if="${isFiltered}==true" th:href="'/maketrejd/' + ${user.id} + '/' + ${skillId}" >
-            <div class="border text-custom text-center" >
+        <div th:each="per: ${performers}" class="text-custom text-center">
+            <a th:if="${isFiltered}==true" th:href="'/maketrejd/' + ${per.id} + '/' + ${skillId}" >
+            <div class="border text-custom text-center">
                 <img src="https://toppng.com/uploads/preview/instagram-default-profile-picture-11562973083brycehrmyv.png" Height="150" width="auto">
-                <div><h4><span th:text="'Namn: '+${user.firstName}">Namn</span></h4></div>
-                <div><span th:text="'Ort: '+${user.location}">Location</span></div>
-                <div><span th:text="'Rating: '+${user.rating}">Betyg</span></div>
-
-
-            </div></a>
+                <div><h4><span th:text="'Namn: '+${per.firstName}">Namn</span></h4></div>
+                <div><span th:text="'Ort: '+${per.location}">Location</span></div>
+                <div><span th:text="'Rating: '+${per.rating}">Betyg</span></div>
+                <div><span th:text="'ID: '+${per.id}">Betyg</span></div>
+            </div>
+            </a>
 
   </div>
     <div class="text-center text-custom">
-        <span onclick="history.back()" class="btn btn-secondary mb-6 mt-3">Back</span>
+        <span th:if="${isFiltered!=true}" onclick="history.back()" class="btn btn-secondary mb-3">Back</span>
+        <span th:if="${isFiltered==true}" onclick="history.go(-2)" class="btn btn-secondary mb-3">Back</span>
     </div>
     </div>
 </section>

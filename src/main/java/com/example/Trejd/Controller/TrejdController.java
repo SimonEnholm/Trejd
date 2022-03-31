@@ -34,7 +34,6 @@ public class TrejdController {
     }
     @PostMapping("/")
     public String checkLogin(@ModelAttribute User user, HttpSession session, BindingResult result) {
-        System.out.println("TeSTARRR");
 
         ValidationUtils.rejectIfEmpty(result,"email","Email cant be empty");
         ValidationUtils.rejectIfEmpty(result,"password","Password cant be empty");
@@ -42,15 +41,21 @@ public class TrejdController {
         if(result.hasErrors()){
             return "home";
         }
-
-        if (service.getUser(user.getEmail(), user.getPassword()) != null) {
-            session.setAttribute("user", user);
+        User loggedInUser = service.getUser(user.getEmail(),user.getPassword());
+        if (loggedInUser != null) {
+            session.setAttribute("user", loggedInUser);
             return "my-page";
         } else {
             //TODO: Print on page.
             System.out.println("No such user!");
             return "home";
         }
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "home";
     }
 
     @GetMapping("/offerlist")
@@ -89,6 +94,7 @@ public class TrejdController {
 //  }
 
     // todo fetmarkering på skillen vi valde.
+    // todo Review utkommenterat???
   @GetMapping("/maketrejd/{id}/{skillId}")
     public String makeTrejdPage(Model model, @PathVariable Long id, @PathVariable Long skillId) {
       User user = service.getUserById(id);
@@ -144,11 +150,6 @@ public class TrejdController {
 //        return "home";
 //    }
 
-    @GetMapping("/login")
-    public String getLoginPage2() {
-        return "login";
-    }
-
 //    @PostMapping("/login")
 //    public String checkLogin(@RequestParam String email, @RequestParam String password, HttpSession session) {
 //        User user = service.getUser(email, password);
@@ -173,6 +174,7 @@ public class TrejdController {
     @GetMapping("/my-page")
     public String getMyPage(HttpSession session) {
       User user = (User)session.getAttribute("user");
+        session.setAttribute("user",user);
       // if no user restrict view.
         return "my-page";
     }
@@ -284,7 +286,7 @@ public class TrejdController {
         User user = (User) session.getAttribute("user");
         model.addAttribute("isFiltered",true);
         model.addAttribute("skillId",skillId);
-        model.addAttribute("users", service.findAllUsersSortedAndFiltered(user,true,skillId));
+        model.addAttribute("performers", service.findAllUsersSortedAndFiltered(user,true,skillId));
         return "viewPerformers";
     }
 
@@ -345,17 +347,11 @@ public class TrejdController {
     @GetMapping({"/create-order", "/create-order/{performerId}/{skillId}"})
     public String createOrder(@PathVariable(required = false) Long performerId,
                               @PathVariable (required = false) Long skillId, HttpSession session, Model model){
-
+        System.out.println("NU");
         OrderTrejd order = new OrderTrejd();
-        //User user = (User) session.getAttribute("user");
 
-//        if(order.getSkillId()==0){
-//            return "create-order";
-//        }
         Map<String,List<Skill>> skillsAndCat = service.getAllSkillsAndCategories();
         model.addAttribute("skills",skillsAndCat);
-        //List<Skill> skills = service.getAllSkills();
-        //model.addAttribute("skills", skills);
 
         if(performerId != null){
             System.out.println("Performer not null");
@@ -368,28 +364,54 @@ public class TrejdController {
             return "create-order";
         }
         model.addAttribute("order", order);
-        System.out.println(" null");
         return "create-order";
     }
 
     // todo länkas vart?
-    @PostMapping("/create-order")
-    public String saveOrder(@ModelAttribute OrderTrejd order,@RequestParam(required = false) Long performerId, HttpSession session) {
+    @PostMapping({"/create-order","/create-order/{performerId}/{skillId}"})
+    public String saveOrder(@ModelAttribute OrderTrejd order, HttpSession session,
+                            @PathVariable(required = false) Long performerId, @PathVariable (required = false) Long skillId, Model model) {
         //Nice to have: If performer exists sen mail to performer and set order to pending.
-        order.setUser( (User) session.getAttribute("user"));
+        String goTo = "order-confirm";
+        User user = (User) session.getAttribute("user");
+        System.out.println(user.getFirstName());
+        order.setUser(user);
         Skill skill = service.getSkillById(order.getSkillId());
         order.setSkill(skill);
-        service.saveOrder(order);
-
         Trejd trejd = new Trejd();
         trejd.setOrderTrejd(order);
         trejd.setCompleted(false);
         if(performerId!=null){
             trejd.setPerformer(service.getUserById(performerId));
+            model.addAttribute("trejd", trejd);
+            goTo = "trejd-confirm";
         }
-
+        service.saveOrder(order);
         service.saveTrejd(trejd);
-        return "order-confirm";
+        return goTo;
     }
+
+    @GetMapping("/trejd-confirm")
+    public String trejdConfirm(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        Trejd trejd = service.getLastTrejd();
+        model.addAttribute("trejd", trejd);
+        return "trejd-confirm";
+    }
+
+    @GetMapping("/updateuserinfo")
+    public String showUserInfo (HttpSession session, Model model){
+        User user = (User)session.getAttribute("user");
+        model.addAttribute("user",user);
+        return "updateuserinfo";
+    }
+    @PostMapping("/updateuserinfo")
+    public String updateUserInfo (@ModelAttribute User user, HttpSession session){
+        //service.updateUser(user.getFirstName(),user.getLastName(),user.getEmail(),user.getPassword(), user.getId());
+        service.saveUser(user);
+        session.setAttribute("user",user);
+        return "my-page";
+    }
+
 
 }

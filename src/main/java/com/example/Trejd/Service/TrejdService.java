@@ -9,6 +9,7 @@ import com.example.Trejd.Repositories.*;
 import com.example.Trejd.Skill;
 import com.example.Trejd.Repositories.UserRepository;
 import com.example.Trejd.User;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -124,7 +125,7 @@ public class TrejdService {
     }
 
     public User getUser(String email, String password) {
-        System.out.println("restar testar");
+
        return userRepo.getUserByEmailAndPassword(email,password);
 
 //        System.out.println("testar testar");
@@ -264,6 +265,7 @@ public class TrejdService {
     }
 
     public void saveOrder(OrderTrejd order) {
+
         orderRepo.save(order);
     }
     public OrderTrejd getOrder(Long id) {
@@ -308,6 +310,15 @@ public class TrejdService {
         return bubbleSortOrder(user, orders);
 
     }
+
+    public Trejd getLastTrejd() {
+        return trejdRepo.getLastTrejd();
+    }
+    public void updateUser(String firstName, String lastName, String email, String password, Long id){
+        userRepo.updateUser(firstName,lastName,email,password, id);
+
+    }
+
 }
 
 
