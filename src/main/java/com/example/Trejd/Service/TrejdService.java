@@ -6,6 +6,7 @@ import com.example.Trejd.OfferTrejd;
 import com.example.Trejd.Skill;
 import com.example.Trejd.Repositories.UserRepository;
 import com.example.Trejd.User;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -248,7 +249,7 @@ public class TrejdService {
         return users;
     }
     public List<User> findAllUsersSortedAndFiltered(User user, Boolean sortByDistance, Long skillId) {
-        List<User> users = userRepo.findAllBySkillId(skillId);
+        List<User> users = userRepo.findAllBySkillId(skillId , user.getId());
 
         if(sortByDistance){
             users = bubbleSortUser(user, users);
@@ -296,7 +297,7 @@ public class TrejdService {
     }
 
     public List<OrderTrejd> findAllOrdersSortedAndFiltered(User user, Long skillId) {
-        List <OrderTrejd> orders = orderRepo.findAllBySkillId(skillId);
+        List <OrderTrejd> orders = orderRepo.findAllBySkillId(skillId, user.getId());
 
         return bubbleSortOrder(user, orders);
     }
@@ -313,6 +314,15 @@ public class TrejdService {
         performer.addToBalance(estimatedTime);
 
     }
+
+    public Trejd getLastTrejd() {
+        return trejdRepo.getLastTrejd();
+    }
+    public void updateUser(String firstName, String lastName, String email, String password, Long id){
+        userRepo.updateUser(firstName,lastName,email,password, id);
+
+    }
+
 }
 
 

@@ -19,10 +19,13 @@ public interface UserRepository extends CrudRepository <User, Long> {
     List<User> findAllByQuery(Long id);
 
     @Query(value = "SELECT * FROM user\n" +
-            "join user_skills\n" +
-            "on\n" +
-            "user.id=user_skills.user_id\n" +
-            "where skill_id=?1",nativeQuery = true)
-    List<User> findAllBySkillId(Long skillId);
+            "JOIN user_skills\n" +
+            "ON user.id=user_skills.user_id\n" +
+            "WHERE skill_id = ?1\n" +
+            "AND user.id != ?2",nativeQuery = true)
+    List<User> findAllBySkillId(Long skillId, Long id);
+
+   @Query(value = "UPDATE user SET firstName =?1, lastName =?2, email=?3, password=?4 Where Id=?5", nativeQuery = true)
+    User updateUser(String firstName, String lastName, String email, String password, Long Id);
 }
 
