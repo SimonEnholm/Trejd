@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:color="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,14 +40,24 @@
         </div>
     </div>
 </nav>
+<div class="text-center">
 <h1 th:text="'Välkommen ' + ${session.user.firstName} + '!'" class ="text-center"> </h1>
+<button type="button" class="btn text-custom mb-3" style="color:#F40F5F;" >Saldo: 00h 00min </button>
 </div>
+</div>
+
+<div>
+    <img src="icon_my_page.JPG"
+         style="height:150px" class="center">
+
+
 
 <div th:if="${session.user.getImage!=null}">
     <img th:src="'/images/'+${session.user.getImage}" style="height:150px" class="user-image center">
 </div>
 <div th:if="${session.user.getImage==null}">
     <img src="icon_my_page.jpg" style="height:150px" class="user-image border-none center">
+
 </div>
 
 <div class="container">
