@@ -380,7 +380,7 @@ public class TrejdController {
         order.setSkill(skill);
         Trejd trejd = new Trejd();
         trejd.setOrderTrejd(order);
-        trejd.setCompleted(false);
+        trejd.setCompleted(true); // ska egebtligen sättas till true när den är bekräftad
         if(performerId!=null){
             trejd.setPerformer(service.getUserById(performerId));
             model.addAttribute("trejd", trejd);
