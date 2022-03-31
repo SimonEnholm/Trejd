@@ -297,6 +297,11 @@ public class TrejdService {
         return bubbleSortOrder(user, orders);
 
     }
+    public void updateUser(String firstName, String lastName, String email, String password, Long id){
+        userRepo.updateUser(firstName,lastName,email,password, id);
+
+    }
+
 }
 
 

@@ -4,7 +4,11 @@ background-color: #F40F5F !important;
 
 
 }
-
+.bg-custom{
+background-color: #1A9DA3 !important;
+  color: #F40F5F;
+  font-family: 'Caveat', cursive;
+}
 .navbar-custom {
   padding: 60px;
   text-align: center;
