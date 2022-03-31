@@ -174,6 +174,7 @@ public class TrejdController {
     @GetMapping("/my-page")
     public String getMyPage(HttpSession session) {
       User user = (User)session.getAttribute("user");
+        session.setAttribute("user",user);
       // if no user restrict view.
         return "my-page";
     }
@@ -397,5 +398,20 @@ public class TrejdController {
         model.addAttribute("trejd", trejd);
         return "trejd-confirm";
     }
+
+    @GetMapping("/updateuserinfo")
+    public String showUserInfo (HttpSession session, Model model){
+        User user = (User)session.getAttribute("user");
+        model.addAttribute("user",user);
+        return "updateuserinfo";
+    }
+    @PostMapping("/updateuserinfo")
+    public String updateUserInfo (@ModelAttribute User user, HttpSession session){
+        //service.updateUser(user.getFirstName(),user.getLastName(),user.getEmail(),user.getPassword(), user.getId());
+        service.saveUser(user);
+        session.setAttribute("user",user);
+        return "my-page";
+    }
+
 
 }
