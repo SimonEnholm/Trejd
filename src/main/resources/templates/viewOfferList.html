@@ -66,9 +66,10 @@
 
 
 
-<h1>AND SO ON.......</h1>
+
 <div class="col-auto text-center text-custom">
-    <span onclick="history.back()" class="btn btn-secondary mb-3">Back</span>
+    <span th:if="${isFiltered!=true}" onclick="history.back()" class="btn btn-secondary mb-3">Back</span>
+    <span th:if="${isFiltered==true}" onclick="history.go(-2)" class="btn btn-secondary mb-3">Back</span>
 </div>
 
 
