@@ -40,20 +40,21 @@
                  <div>
                 <h1>BÖRJA TREJDA, KOMPIS!</h1>
             </div>
-            <form id="form1" action="/" method="post" th:object="${user}">
+            <form id="form1" action="" method="post" th:object="${user}">
                 <div class="mb-2">
-                    <label for="exampleInputEmail1" class="form-label error">E-post adress</label><span th:if="${#fields.hasErrors('email')}">Field can't be empty</span>
-                    <input type="email" name="email" class="form-control" th:field="*{email}" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <label for="exampleInputEmail1" class="form-label">E-post adress</label><span class="error" th:if="${#fields.hasErrors('email')}">Field can't be empty</span>
+                    <input type="email" class="form-control" th:field="*{email}" id="exampleInputEmail1" aria-describedby="emailHelp">
                 </div>
                 <div class="mb-2">
-                    <label for="exampleInputPassword1" class="form-label error">Lösenord</label><span th:if="${#fields.hasErrors('password')}">Field can't be empty</span>
-                    <input type="password" name="password" th:field="*{password}" class="form-control" id="exampleInputPassword1">
+                    <label for="exampleInputPassword1" class="form-label">Lösenord</label><span class="error" th:if="${#fields.hasErrors('password')}">Field can't be empty</span>
+                    <input type="password" th:field="*{password}" class="form-control" id="exampleInputPassword1">
                 </div>
                 <button type="submit" form="form1" class="btn btn-primary mt-3 mb-3">Logga In</button>
+            </form>
                 <p>Glömt lösenord?</p>
                 <a href="/create-user"><input type="button" class="btn btn-secondary mb-5" id="button2" value="Create Account"></input></a>
 
-            </form>
+
     </div>
 </section>
 

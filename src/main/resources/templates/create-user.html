@@ -38,7 +38,7 @@
 </div>
 </div>
 <div class="container text-custom mt-5">
-<form action="" method="post" class="mb-3" th:object="${user}">
+    <form action="" method="post" class="mb-3" th:object="${user}">
     <label for="FormInput1" class="form-label">Förnamn</label><span class="error" th:if="${#fields.hasErrors('firstName')}">Field can't be empty</span>
     <input type="text" th:field="*{firstName}" class="form-control" id="FormInput1" placeholder="First Name">
 

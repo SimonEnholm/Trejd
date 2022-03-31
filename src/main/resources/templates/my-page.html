@@ -45,14 +45,12 @@
         </div>
     </div>
 </nav>
-<h1 class ="text-center"> My Page</h1>
+<h1 th:text="'Welcome ' + ${session.user.firstName}" class ="text-center"> My Page</h1>
 </div>
 <div>
     <img src="icon_my_page.JPG"
          style="height:150px" class="center">
 </div>
-
-<p th:text="${session.firstname}">inloggad firstname</p>
 <div class="container">
     <img src="" alt="">
     <section class="text-custom text-center mb-4">

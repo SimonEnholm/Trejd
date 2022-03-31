@@ -26,8 +26,9 @@ async function showPosition(position) {
 
 async function setLocation(){
     disableButtons();
-    let response = await fetch('https://geocode.xyz/'+x.value+'?json=1&auth=1710301539225159493852x18050');
+    let response = await fetch('https://geocode.xyz/'+x.value+'?json=1&auth=710301539225159493852x18050');
     let responseCode = await response.status;
+
     if(responseCode==200){
         let theData = await response.json();
         if(theData.error!=null){
