@@ -75,8 +75,11 @@
         <textarea name="description" class="form-control text-center" id="exampleFormControlTextarea1" rows="3" th:field="*{description}" placeholder="Describe your need..."></textarea>
     </div>
     <!-************************************  KÖRS ALLTID  ****************************************** ->
+
     <div class="text-custom text-center" >
-    <label for="FormInput5" class="form-label">Type in or get the location of your need: </label>
+        <label for="FormInput6" class="form-label">Hur lång tid estimerar du att tjänsten kommer ta?</label>
+        <input type="number" min="0" value="50" th:field="*{estimatedTime}" class="form-control text-custom text-center" id="FormInput6" placeholder="Type in estimated time" th:onchange="'checkUnderBalance('+${order.user.balance}+')'"><br>
+    <label for="FormInput5" class="form-label">Skriv in, eller hämta din position: </label>
     <input type="text" th:field="*{location}" class="form-control text-custom text-center" id="FormInput5" placeholder="Type in or get your location"><br>
     </div>
     <input type = "hidden" th:field="*{latitude}" id="latitude">
@@ -117,6 +120,7 @@
     </a>
   </div>
 </footer>
+<script src="/balanceScript.js"></script>
 <script src="/geoScript.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>

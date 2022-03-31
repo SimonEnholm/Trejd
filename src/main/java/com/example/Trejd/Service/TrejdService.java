@@ -1,11 +1,8 @@
 package com.example.Trejd.Service;
 import com.example.Trejd.*;
 import com.example.Trejd.Repositories.*;
-import com.example.Trejd.*;
-import com.example.Trejd.Repositories.*;
 import com.example.Trejd.Category;
 import com.example.Trejd.OfferTrejd;
-import com.example.Trejd.Repositories.*;
 import com.example.Trejd.Skill;
 import com.example.Trejd.Repositories.UserRepository;
 import com.example.Trejd.User;
@@ -244,9 +241,6 @@ public class TrejdService {
         List<User> users;
         if(sortByDistance){
             users = bubbleSortUser(user,(List<User>) userRepo.findAllByQuery(user.getId()));
-            for (int i = 0; i < users.size(); i++) {
-                System.out.println(users.get(i).getFirstName());
-            }
         }
         else{
             //sortByRating
@@ -311,6 +305,13 @@ public class TrejdService {
     public Object findAllOrdersSorted(User user) {
         List<OrderTrejd> orders = (List<OrderTrejd>) orderRepo.findAll();
         return bubbleSortOrder(user, orders);
+
+    }
+
+    public void transferTime(User performer, User user, double estimatedTime) {
+        double userSaldo = user.getBalance();
+        user.subtractFromBalance(estimatedTime);
+        performer.addToBalance(estimatedTime);
 
     }
 

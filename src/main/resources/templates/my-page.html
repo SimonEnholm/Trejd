@@ -42,11 +42,16 @@
 </nav>
 <h1 th:text="'Välkommen ' + ${session.user.firstName} + '!'" class ="text-center"> </h1>
 </div>
-<div>
-    <img src="icon_my_page.JPG"
-         style="height:150px" class="center">
+
+<div th:if="${session.user.getImage!=null}">
+    <img th:src="'/images/'+${session.user.getImage}" style="height:150px" class="user-image center">
 </div>
+<div th:if="${session.user.getImage==null}">
+    <img src="icon_my_page.jpg" style="height:150px" class="user-image border-none center">
+</div>
+
 <div class="container">
+
     <section class="text-custom text-center mb-4">
         <h1>BÖRJA TREJDA</h1>
         <div mt-5>
